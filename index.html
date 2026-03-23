@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antônio Marcos | Estratégia Contábil e Fiscal</title>
+    <title>Antônio Marcos | Analista Contábil e Estrategista</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Paleta de Cores e Fontes */
         :root {
             --gold-light: #FBF5B7;
             --gold-base: #D4AF37;
             --gold-dark: #AA771C;
-            --bg-dark: #0a0a0b;
-            --bg-panel: #141415;
+            --bg-dark: #050506;
+            --trade-green: #22c55e;
+            --trade-red: #ef4444;
         }
 
         body {
@@ -31,6 +31,10 @@
 
         h1, h2, h3, .font-serif {
             font-family: 'Playfair Display', serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
         }
 
         /* Efeitos Dourados */
@@ -47,25 +51,56 @@
             animation: gradientShift 5s ease infinite;
         }
 
-        .border-gold {
-            border-color: rgba(212, 175, 55, 0.3);
-        }
-
-        /* Animações e Transições */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        /* Glassmorphism e Paineis */
+        .glass-panel {
+            background: rgba(10, 10, 12, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .btn-glow {
-            animation: pulse-glow 2.5s infinite;
+        /* Animação do Ticker (Fita Financeira) */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background-color: rgba(5, 5, 6, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            box-sizing: content-box;
+        }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            animation-name: ticker;
+            animation-duration: 40s;
+        }
+
+        /* Background Trading Grid */
+        .trading-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+        }
+
+        /* Transições de Candlesticks gerados via JS */
+        .candle-body, .candle-wick {
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Sistema de Páginas (SPA) */
@@ -73,53 +108,36 @@
             display: none;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
-
         .page-section.active {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Glassmorphism */
-        .glass {
-            background: rgba(20, 20, 21, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-        }
-        
-        .glass-card {
-            background: linear-gradient(180deg, rgba(30,30,32,0.8) 0%, rgba(20,20,22,0.9) 100%);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(212, 175, 55, 0.5);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(212, 175, 55, 0.1);
-        }
-
-        /* Imagem de fundo abstrata */
-        .bg-pattern {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.03), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.04), transparent 25%);
-            z-index: -1;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#D4AF37] selection:text-black">
 
-    <div class="bg-pattern"></div>
+    <!-- Fita Ticker (Topo estilo bolsa de valores) -->
+    <div class="fixed top-0 left-0 w-full z-[60] ticker-wrap py-1.5 hidden md:block">
+        <div class="ticker-move text-xs font-mono tracking-widest text-gray-400">
+            <span class="mx-6"><strong class="text-[#D4AF37]">AMX INDEX</strong> 104.50 <span class="text-green-500">▲ +1.2%</span></span>
+            <span class="mx-6"><strong class="text-gray-300">CARGA TRIBUTÁRIA MÉDIA</strong> <span class="text-green-500">▼ -18.4% (OTIMIZADO)</span></span>
+            <span class="mx-6"><strong class="text-[#D4AF37]">RISCO FISCAL</strong> <span class="text-green-500">▼ 0.00%</span></span>
+            <span class="mx-6"><strong class="text-gray-300">CRÉDITOS RECUPERADOS</strong> <span class="text-green-500">▲ +R$ 2.4M</span></span>
+            <span class="mx-6"><strong class="text-gray-300">MULTAS E AUTUAÇÕES</strong> <span class="text-red-500">▼ EVITADO</span></span>
+            <!-- Repetição para loop contínuo -->
+            <span class="mx-6"><strong class="text-[#D4AF37]">AMX INDEX</strong> 104.50 <span class="text-green-500">▲ +1.2%</span></span>
+            <span class="mx-6"><strong class="text-gray-300">CARGA TRIBUTÁRIA MÉDIA</strong> <span class="text-green-500">▼ -18.4% (OTIMIZADO)</span></span>
+            <span class="mx-6"><strong class="text-[#D4AF37]">RISCO FISCAL</strong> <span class="text-green-500">▼ 0.00%</span></span>
+            <span class="mx-6"><strong class="text-gray-300">CRÉDITOS RECUPERADOS</strong> <span class="text-green-500">▲ +R$ 2.4M</span></span>
+            <span class="mx-6"><strong class="text-gray-300">MULTAS E AUTUAÇÕES</strong> <span class="text-red-500">▼ EVITADO</span></span>
+        </div>
+    </div>
 
     <!-- Navegação / Menu -->
-    <nav class="fixed w-full z-50 glass border-b border-gold/20">
+    <nav class="fixed w-full z-50 glass-panel border-b-0 md:top-[30px] top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
@@ -131,26 +149,26 @@
                                 <stop offset="100%" stop-color="#AA771C" />
                             </linearGradient>
                         </defs>
-                        <path d="M50 5 L90 25 V75 L50 95 L10 75 V25 L50 5Z" stroke="url(#logoGrad)" stroke-width="3" fill="rgba(212, 175, 55, 0.1)"/>
+                        <path d="M50 5 L90 25 V75 L50 95 L10 75 V25 L50 5Z" stroke="url(#logoGrad)" stroke-width="3" fill="rgba(212, 175, 55, 0.05)"/>
                         <path d="M50 30 L35 70 M50 30 L65 70 M40 55 L60 55" stroke="url(#logoGrad)" stroke-width="5" stroke-linecap="round"/>
                     </svg>
                     <div>
                         <h1 class="text-xl font-bold tracking-wider text-white">Antônio Marcos</h1>
-                        <p class="text-[10px] text-[#D4AF37] uppercase tracking-widest">Estratégia Contábil</p>
+                        <p class="text-[10px] text-[#D4AF37] uppercase font-mono tracking-widest border-t border-[#D4AF37]/30 pt-0.5 mt-0.5">Analista Contábil</p>
                     </div>
                 </div>
 
                 <!-- Menu Desktop -->
                 <div class="hidden md:flex space-x-8">
-                    <button onclick="navigateTo('home')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Início</button>
+                    <button onclick="navigateTo('home')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Terminal</button>
                     <button onclick="navigateTo('historia')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Nossa História</button>
-                    <button onclick="navigateTo('solucoes')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Soluções</button>
+                    <button onclick="navigateTo('solucoes')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Operações</button>
                 </div>
 
                 <!-- Botão CTA Menu -->
                 <div class="hidden md:block">
-                    <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Acessei%20seu%20site%20e%20gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20gratuito." target="_blank" class="bg-gradient-gold text-black px-6 py-2.5 rounded-full font-bold text-sm hover:scale-105 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.3)]">
-                        Fale Comigo
+                    <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20uma%20consultoria%20estrat%C3%A9gica." target="_blank" class="bg-gradient-gold text-black px-6 py-2.5 rounded-sm font-bold text-sm uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(212,175,55,0.2)] border border-[#D4AF37]">
+                        Agendar Consultoria
                     </a>
                 </div>
 
@@ -164,77 +182,119 @@
         </div>
 
         <!-- Menu Mobile Overlay -->
-        <div id="mobile-menu" class="hidden md:hidden glass border-t border-gold/20 absolute w-full left-0 top-20 flex flex-col items-center py-6 space-y-6 shadow-2xl">
-            <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Início</button>
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-gold/20 absolute w-full left-0 top-20 flex flex-col items-center py-6 space-y-6 shadow-2xl">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Terminal</button>
             <button onclick="navigateTo('historia'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Nossa História</button>
-            <button onclick="navigateTo('solucoes'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Soluções & Contato</button>
-            <a href="https://wa.me/5531971743868?text=Ol%C3%A1%21%20Gostaria%20de%20um%20diagn%C3%B3stico." target="_blank" class="bg-gradient-gold text-black px-8 py-3 rounded-full font-bold">Fale Comigo</a>
+            <button onclick="navigateTo('solucoes'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Operações & Contato</button>
+            <a href="https://wa.me/5531971743868?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20consultoria." target="_blank" class="bg-gradient-gold text-black px-8 py-3 rounded-sm font-bold uppercase tracking-wider">Agendar Consultoria</a>
         </div>
     </nav>
 
-    <!-- Espaçamento para o menu fixo -->
-    <div class="pt-20"></div>
-
     <!-- ==========================================
-         PÁGINA 1: INÍCIO (HERO)
+         PÁGINA 1: INÍCIO (HERO - TRADING TERMINAL)
          ========================================== -->
-    <section id="page-home" class="page-section active min-h-[calc(100vh-80px)] flex items-center py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Texto Hero -->
-                <div class="space-y-8">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/5">
-                        <span class="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse"></span>
-                        <span class="text-xs font-semibold text-[#D4AF37] tracking-wider uppercase">Analista Contábil Especialista</span>
+    <section id="page-home" class="page-section active relative w-full h-screen min-h-[800px] overflow-hidden bg-[#020202]">
+        
+        <!-- Fundo: Grid e Gráfico de Velas em Tempo Real -->
+        <div class="absolute inset-0 z-0">
+            <!-- Grid Lines -->
+            <div class="absolute inset-0 trading-grid opacity-60"></div>
+            <!-- Container do Gráfico JS -->
+            <div id="live-chart-container" class="absolute inset-x-0 bottom-0 h-[70%] flex items-end justify-around px-2 pb-10 opacity-30 pointer-events-none">
+                <!-- Candlesticks injetados pelo JavaScript aqui -->
+            </div>
+            <!-- Overlay escuro para garantir leitura do texto -->
+            <div class="absolute inset-0 bg-gradient-to-r from-[#050506] via-[#050506]/90 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#050506] via-transparent to-transparent"></div>
+        </div>
+
+        <!-- Conteúdo Principal Flutuante -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center pt-20">
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Bloco de Texto (Esquerda) -->
+                <div class="lg:col-span-7 space-y-8">
+                    
+                    <!-- Status Live -->
+                    <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded bg-black/50 border border-green-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+                        <div class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                        </div>
+                        <span class="text-[10px] font-mono font-bold text-green-400 tracking-widest uppercase">Estratégia Ativa</span>
                     </div>
                     
-                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-white">
-                        Contabilidade não é custo. <br>
-                        <span class="text-gradient-gold font-serif italic">É inteligência.</span>
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-white drop-shadow-lg">
+                        Contabilidade <br> não é custo. <br>
+                        <span class="text-gradient-gold font-serif italic text-6xl lg:text-8xl">É inteligência.</span>
                     </h1>
                     
-                    <p class="text-lg text-gray-400 leading-relaxed max-w-xl">
-                        Ajudamos empresas a pagar menos impostos de forma totalmente legal, organizar suas finanças e ter paz de espírito para focar no que realmente importa: <strong class="text-white">crescer.</strong>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-xl font-light border-l-2 border-[#D4AF37] pl-4">
+                        Revolucione os números da sua empresa. Analisamos o seu cenário, cortamos impostos indevidos e transformamos o seu balanço num verdadeiro <strong class="text-white font-semibold">ativo de alta performance</strong>.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Minha%20empresa%20precisa%20de%20uma%20revis%C3%A3o%20cont%C3%A1bil." target="_blank" class="bg-gradient-gold btn-glow text-black px-8 py-4 rounded-xl font-bold text-center flex items-center justify-center gap-2 hover:scale-105 transition-all">
-                            <i data-lucide="calculator" class="w-5 h-5"></i>
-                            Quero um Diagnóstico Gratuito
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Minha%20empresa%20precisa%20de%20uma%20revis%C3%A3o%20e%20consultoria." target="_blank" class="bg-gradient-gold text-black px-8 py-4 rounded-sm font-bold font-mono text-center flex items-center justify-center gap-3 hover:scale-105 transition-all uppercase tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                            <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                            Agendar Consultoria
                         </a>
-                        <button onclick="navigateTo('historia')" class="px-8 py-4 rounded-xl font-bold text-white border border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 transition-colors text-center">
-                            Conhecer Nossa História
-                        </button>
-                    </div>
-
-                    <div class="pt-8 flex items-center gap-4 text-sm text-gray-500 border-t border-gray-800">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-[#D4AF37]"></i>
-                        <span>Parceiro Oficial: <strong>Adriana Souza Contabilidade Ltda</strong></span>
                     </div>
                 </div>
 
-                <!-- Elemento Visual / Gráfico -->
-                <div class="relative hidden lg:block">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent rounded-full blur-3xl"></div>
-                    <div class="glass-card p-8 rounded-2xl relative z-10 transform rotate-2 hover:rotate-0 transition-transform duration-500">
-                        <div class="flex justify-between items-center border-b border-gray-700 pb-4 mb-6">
-                            <h3 class="text-white font-serif text-xl">Economia Tributária Gerada</h3>
-                            <i data-lucide="trending-up" class="w-6 h-6 text-[#D4AF37]"></i>
+                <!-- Bloco de Dados de Mercado (Direita) -->
+                <div class="lg:col-span-5 hidden lg:block">
+                    <div class="glass-panel p-6 rounded-lg border-t-2 border-t-[#D4AF37] relative">
+                        <!-- Corner Decorations -->
+                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#D4AF37]"></div>
+                        <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#D4AF37]"></div>
+                        <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#D4AF37]"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#D4AF37]"></div>
+
+                        <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-800">
+                            <h3 class="text-white font-mono text-sm uppercase tracking-widest">Performance Dashboard</h3>
+                            <i data-lucide="activity" class="w-5 h-5 text-[#D4AF37]"></i>
                         </div>
-                        <div class="space-y-4">
-                            <div class="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-                                <div class="h-full bg-gradient-gold w-[85%]"></div>
+
+                        <!-- Indicadores Dinâmicos -->
+                        <div class="space-y-6">
+                            <!-- Taxa Tributária (Animada como um Ticker) -->
+                            <div>
+                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
+                                    <span>ENQUADRAMENTO FISCAL</span>
+                                    <span class="text-green-400">OTIMIZADO</span>
+                                </div>
+                                <div class="flex items-end gap-3 overflow-hidden h-12 py-1">
+                                    <span id="regime-name" class="text-3xl font-bold text-white font-mono" style="transition: all 0.3s ease;">SIMPLES NAC.</span>
+                                    <span id="regime-saving" class="text-green-500 text-xs font-mono mb-1 flex items-center" style="transition: all 0.3s ease;">
+                                        <i data-lucide="arrow-down-right" class="w-3 h-3 mr-1"></i> -15% CUSTO
+                                    </span>
+                                </div>
                             </div>
-                            <div class="flex justify-between text-sm text-gray-400">
-                                <span>Antes da Revisão</span>
-                                <span class="text-[#D4AF37] font-bold">Após a Revisão</span>
+
+                            <!-- Gráfico de Linha Simples -->
+                            <div class="h-16 w-full relative border-y border-gray-800/50 py-2">
+                                <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                    <!-- Tendência de Lucro -->
+                                    <path d="M 0 80 Q 20 70, 40 85 T 70 40 T 100 20" fill="none" stroke="#22c55e" stroke-width="2" class="opacity-80"/>
+                                    <circle cx="100" cy="20" r="3" fill="#22c55e" class="animate-pulse" />
+                                </svg>
                             </div>
-                        </div>
-                        <div class="mt-8 p-4 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded-xl">
-                            <p class="text-sm text-gray-300 italic">"Muitos empresários perdem dinheiro mensalmente por estarem no regime tributário errado. Nós encontramos o vazamento e fechamos a torneira."</p>
+
+                            <!-- Painel de Tickers Secundários -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-black/40 p-3 rounded border border-gray-800">
+                                    <p class="text-[10px] text-gray-500 font-mono uppercase">Proteção de Capital</p>
+                                    <p class="text-white font-mono text-lg mt-1" id="live-protection">100%</p>
+                                </div>
+                                <div class="bg-[#D4AF37]/5 p-3 rounded border border-[#D4AF37]/30">
+                                    <p class="text-[10px] text-[#D4AF37] font-mono uppercase">RoI Contábil</p>
+                                    <p class="text-[#D4AF37] font-mono text-lg mt-1 font-bold">ALTO</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -242,39 +302,62 @@
     <!-- ==========================================
          PÁGINA 2: NOSSA HISTÓRIA
          ========================================== -->
-    <section id="page-historia" class="page-section min-h-[calc(100vh-80px)] py-16">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="page-historia" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#050506]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Por que nos escolher?</h2>
+                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">A Lógica por trás dos Números</h2>
                 <div class="h-1 w-24 bg-gradient-gold mx-auto rounded-full"></div>
             </div>
 
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1 space-y-6 text-gray-300 text-lg leading-relaxed">
+                <div class="order-2 md:order-1 space-y-6 text-gray-300 text-lg leading-relaxed font-light">
                     <p>
-                        Ao longo da minha trajetória como Analista Contábil, percebi um padrão perigoso no mercado: <strong class="text-white">a contabilidade tratada apenas como um "mal necessário" para gerar guias de impostos.</strong>
+                        Ao longo da minha trajetória como <strong class="text-white font-medium">Analista Contábil</strong>, analisei centenas de empresas e identifiquei um padrão perigoso: empresários exaustos a tratar a contabilidade apenas como um "mal necessário" para imprimir guias de impostos.
                     </p>
                     <p>
-                        Foi essa indignação que moldou minha forma de trabalhar. Uma empresa que não tem seus números usados de forma estratégica está navegando no escuro. Pior do que isso: <strong class="text-[#D4AF37]">está deixando dinheiro na mesa.</strong>
+                        Foi essa ineficiência do mercado que moldou a minha operação. Uma empresa com números no escuro é como um trader a operar de olhos vendados. O resultado? <strong class="text-[#D4AF37] font-medium">Sangria financeira silenciosa.</strong>
                     </p>
                     <p>
-                        Como parceiro da <strong class="text-white">Adriana Souza Contabilidade Ltda</strong>, unimos expertise técnica com visão de negócios. Nós não apenas processamos a sua folha de pagamento ou entregamos o balanço; nós analisamos o seu regime tributário, identificamos créditos não utilizados e blindamos o seu patrimônio.
+                        Em parceria com a <strong class="text-white font-medium border-b border-gray-600">Adriana Souza Contabilidade Ltda</strong>, o nosso método une rigor técnico a uma visão de investimentos. Nós não nos limitamos a processar folha de pagamento; nós mapeamos o risco, calibramos o regime tributário e blindamos o seu patrimônio como quem gere um fundo de alto risco.
                     </p>
-                    <div class="glass p-6 rounded-xl border-l-4 border-l-[#D4AF37] mt-8">
-                        <h3 class="text-xl font-bold text-white font-serif mb-2">A Nossa Promessa</h3>
-                        <p class="text-sm text-gray-400">Transformar a sua contabilidade de um centro de custos burocrático para uma ferramenta poderosa de tomada de decisão e geração de lucro.</p>
+                    
+                    <!-- Quote Box -->
+                    <div class="glass-panel p-6 rounded-sm border-l-4 border-l-[#D4AF37] mt-8 bg-black/40 relative">
+                        <i data-lucide="quote" class="absolute top-4 right-4 w-8 h-8 text-[#D4AF37] opacity-20"></i>
+                        <h3 class="text-lg font-bold text-white font-mono uppercase tracking-widest mb-2 text-[#D4AF37]">Nossa Tese</h3>
+                        <p class="text-sm text-gray-400">A contabilidade deve deixar de ser uma despesa passiva e transformar-se na principal alavanca para a tomada de decisão e maximização de lucro.</p>
                     </div>
                 </div>
                 
                 <div class="order-1 md:order-2 relative">
-                    <!-- Foto ou Representação do Profissional -->
-                    <div class="aspect-[4/5] rounded-2xl overflow-hidden glass-card relative group">
-                        <!-- Sua Foto -->
-                        <img src="minha-foto1.jpg.jpeg" alt="Antônio Marcos" class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700">
+                    <!-- Foto Profissional com Fallback -->
+                    <div class="aspect-[4/5] rounded-sm overflow-hidden glass-panel relative group border border-gray-800 bg-[#0a0a0c]">
                         
-                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/100 to-transparent z-10">
-                            <h3 class="text-2xl font-bold text-white">Antônio Marcos</h3>
-                            <p class="text-[#D4AF37]">Analista Contábil e Estrategista</p>
+                        <!-- Fallback Elegante (Fica por trás e só aparece se a imagem falhar o carregamento) -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-20">
+                            <i data-lucide="shield-check" class="w-24 h-24 text-[#D4AF37] mb-4"></i>
+                            <span class="font-mono text-[#D4AF37] text-xs uppercase tracking-widest">Proteção Ativa</span>
+                        </div>
+
+                        <!-- Sua Foto Real (com onerror para esconder o ícone de quebrado) -->
+                        <!-- ATENÇÃO: O ficheiro no GitHub tem de se chamar exatamente "minha-foto1.jpg" -->
+                        <img src="minha-foto1.jpg" 
+                             alt="Antônio Marcos" 
+                             onerror="this.style.display='none'"
+                             class="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 z-10">
+                        
+                        <!-- Overlay estilo scanner digital -->
+                        <div class="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.2)_50%)] bg-[size:100%_4px] pointer-events-none opacity-50 z-20"></div>
+
+                        <!-- Identificação -->
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/90 to-transparent z-30 border-t border-[#D4AF37]/20">
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white font-serif tracking-wide">Antônio Marcos</h3>
+                                    <p class="text-[#D4AF37] font-mono text-xs uppercase tracking-widest mt-1">Analista & Estrategista</p>
+                                </div>
+                                <i data-lucide="shield-check" class="w-6 h-6 text-[#D4AF37]"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -285,91 +368,96 @@
     <!-- ==========================================
          PÁGINA 3: SOLUÇÕES E CONTATO
          ========================================== -->
-    <section id="page-solucoes" class="page-section min-h-[calc(100vh-80px)] py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="page-solucoes" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#020202]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
             
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Como blindamos o seu negócio</h2>
+                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Operações & Estrutura</h2>
                 <div class="h-1 w-24 bg-gradient-gold mx-auto rounded-full mb-8"></div>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg">Soluções completas desenhadas para garantir conformidade legal, redução de custos e crescimento sustentável.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">As nossas soluções funcionam como engrenagens de um sistema financeiro focado em garantir liquidez, conformidade e redução agressiva (mas legal) de custos.</p>
             </div>
 
             <!-- Grid de Serviços -->
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
                 <!-- Card 1 -->
-                <div class="glass-card p-8 rounded-2xl group">
-                    <div class="w-14 h-14 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mb-6 border border-[#D4AF37]/30 group-hover:bg-[#D4AF37] transition-colors">
-                        <i data-lucide="shield-check" class="w-7 h-7 text-[#D4AF37] group-hover:text-black transition-colors"></i>
+                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
+                    <div class="mb-6 flex items-center justify-between">
+                        <i data-lucide="crosshair" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
+                        <span class="text-gray-700 font-mono text-sm font-bold">01</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 font-serif">Revisão Tributária</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Análise profunda para identificar impostos pagos a mais e encontrar o enquadramento perfeito (Simples, Presumido ou Real) para pagar o mínimo permitido por lei.</p>
+                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Revisão Tributária</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">Auditoria profunda para estancar vazamentos financeiros. Mapeamos o enquadramento perfeito para que pague estritamente o mínimo imposto exigido por lei.</p>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="glass-card p-8 rounded-2xl group">
-                    <div class="w-14 h-14 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mb-6 border border-[#D4AF37]/30 group-hover:bg-[#D4AF37] transition-colors">
-                        <i data-lucide="file-text" class="w-7 h-7 text-[#D4AF37] group-hover:text-black transition-colors"></i>
+                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
+                    <div class="mb-6 flex items-center justify-between">
+                        <i data-lucide="database" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
+                        <span class="text-gray-700 font-mono text-sm font-bold">02</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 font-serif">Escrituração Fiscal</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Garantia de conformidade 100%. Processamento rigoroso de notas, apuração correta de impostos e entrega de todas as obrigações acessórias sem atrasos.</p>
+                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Escrituração Fiscal</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">Dados processados com precisão cirúrgica. Garantimos 100% de conformidade, evitando passivos, multas e garantindo a entrega pontual de todas as obrigações.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="glass-card p-8 rounded-2xl group">
-                    <div class="w-14 h-14 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mb-6 border border-[#D4AF37]/30 group-hover:bg-[#D4AF37] transition-colors">
-                        <i data-lucide="pie-chart" class="w-7 h-7 text-[#D4AF37] group-hover:text-black transition-colors"></i>
+                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
+                    <div class="mb-6 flex items-center justify-between">
+                        <i data-lucide="pie-chart" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
+                        <span class="text-gray-700 font-mono text-sm font-bold">03</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 font-serif">Balanço e DRE</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Transformamos números complexos em relatórios visuais. Entenda exatamente para onde o seu dinheiro está indo e qual é a real margem de lucro do negócio.</p>
+                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Balanço e DRE</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">Raio-X financeiro do seu negócio. Transformamos números abstratos em painéis de controlo visuais para que saiba exatamente qual é a sua margem de lucro real.</p>
                 </div>
 
                 <!-- Card 4 -->
-                <div class="glass-card p-8 rounded-2xl group">
-                    <div class="w-14 h-14 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mb-6 border border-[#D4AF37]/30 group-hover:bg-[#D4AF37] transition-colors">
-                        <i data-lucide="users" class="w-7 h-7 text-[#D4AF37] group-hover:text-black transition-colors"></i>
+                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
+                    <div class="mb-6 flex items-center justify-between">
+                        <i data-lucide="users" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
+                        <span class="text-gray-700 font-mono text-sm font-bold">04</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 font-serif">Gestão de Folha</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Administração completa e segura das rotinas trabalhistas. Evite processos e dores de cabeça com cálculos precisos de holerites, férias e rescisões.</p>
+                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Gestão de Folha</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">Gestão de passivos laborais mitigada a zero. Administração segura das rotinas de RH, holerites, férias e rescisões com cálculos exatos.</p>
                 </div>
             </div>
 
             <!-- Seção de Contato -->
-            <div class="glass-card rounded-3xl overflow-hidden border border-[#D4AF37]/30 relative">
-                <!-- Efeito luminoso no fundo -->
-                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[100px] pointer-events-none"></div>
-
+            <div class="glass-panel border-l-4 border-l-[#D4AF37] relative overflow-hidden bg-[#0a0a0c]">
                 <div class="grid lg:grid-cols-2">
                     <!-- Informações -->
-                    <div class="p-10 lg:p-16 flex flex-col justify-center">
-                        <h2 class="text-3xl font-bold text-white font-serif mb-2">Pronto para otimizar seus resultados?</h2>
-                        <p class="text-gray-400 mb-8">Entre em contato direto comigo ou venha tomar um café em nosso escritório no centro de Belo Horizonte.</p>
+                    <div class="p-10 lg:p-16 flex flex-col justify-center relative z-10">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            <span class="text-green-500 font-mono text-xs tracking-widest uppercase">Agenda Aberta</span>
+                        </div>
+                        <h2 class="text-3xl font-bold text-white font-serif mb-4">Inicie a otimização agora.</h2>
+                        <p class="text-gray-400 mb-8 font-light">Agende uma reunião direta comigo ou visite o nosso quartel-general no centro de Belo Horizonte para um diagnóstico estrutural.</p>
 
                         <div class="space-y-6 mb-10">
                             <div class="flex items-start gap-4">
-                                <div class="bg-[#D4AF37]/10 p-3 rounded-lg"><i data-lucide="map-pin" class="w-6 h-6 text-[#D4AF37]"></i></div>
+                                <div class="bg-[#D4AF37]/10 p-3 rounded-sm border border-[#D4AF37]/20"><i data-lucide="map-pin" class="w-5 h-5 text-[#D4AF37]"></i></div>
                                 <div>
-                                    <h4 class="text-white font-bold">Nosso Escritório</h4>
-                                    <p class="text-gray-400 text-sm mt-1">Rua São Paulo, nº 409 - Andar 17, Sala 1707<br>Edifício Avenida (Esquina com Av. Afonso Pena)<br>Belo Horizonte - MG</p>
+                                    <h4 class="text-white font-mono uppercase tracking-wider text-sm mb-1">Central de Operações</h4>
+                                    <p class="text-gray-400 text-sm font-light">Rua São Paulo, nº 409 - Andar 17, Sala 1707<br>Edifício Avenida (Esq. Av. Afonso Pena)<br>Belo Horizonte - MG</p>
                                 </div>
                             </div>
                             
                             <div class="flex items-center gap-4">
-                                <div class="bg-[#D4AF37]/10 p-3 rounded-lg"><i data-lucide="mail" class="w-6 h-6 text-[#D4AF37]"></i></div>
+                                <div class="bg-[#D4AF37]/10 p-3 rounded-sm border border-[#D4AF37]/20"><i data-lucide="mail" class="w-5 h-5 text-[#D4AF37]"></i></div>
                                 <div>
-                                    <h4 class="text-white font-bold">E-mail Direto</h4>
-                                    <a href="mailto:eusouanton@gmail.com" class="text-gray-400 text-sm hover:text-[#D4AF37] transition-colors">eusouanton@gmail.com</a>
+                                    <h4 class="text-white font-mono uppercase tracking-wider text-sm mb-1">Canal Direto</h4>
+                                    <a href="mailto:eusouanton@gmail.com" class="text-gray-400 text-sm font-light hover:text-[#D4AF37] transition-colors">eusouanton@gmail.com</a>
                                 </div>
                             </div>
                         </div>
 
-                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20uma%20conversa%20sobre%20os%20servi%C3%A7os%20da%20contabilidade." target="_blank" class="bg-gradient-gold text-black px-8 py-4 rounded-xl font-bold text-center flex items-center justify-center gap-3 hover:scale-105 transition-transform w-full sm:w-auto self-start btn-glow">
-                            <i data-lucide="message-circle" class="w-6 h-6"></i>
-                            Falar no WhatsApp: (31) 97174-3868
+                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20uma%20reuni%C3%A3o%20para%20revis%C3%A3o%20cont%C3%A1bil." target="_blank" class="bg-gradient-gold text-black px-8 py-4 rounded-sm font-bold text-center flex items-center justify-center gap-3 hover:bg-white transition-colors w-full sm:w-auto self-start uppercase font-mono tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+                            <i data-lucide="smartphone" class="w-5 h-5"></i>
+                            Conectar via WhatsApp
                         </a>
                     </div>
 
-                    <!-- Mapa -->
-                    <div class="h-80 lg:h-auto min-h-[400px] w-full relative">
+                    <!-- Mapa com Filtro Escuro -->
+                    <div class="h-80 lg:h-auto min-h-[400px] w-full relative border-l border-gray-800">
                         <iframe 
                             width="100%" 
                             height="100%" 
@@ -378,12 +466,13 @@
                             marginheight="0" 
                             marginwidth="0" 
                             src="https://maps.google.com/maps?q=Condominio+do+Edificio+Avenida+Rua+Sao+Paulo+409+Belo+Horizonte&t=m&z=17&output=embed&iwloc=near&color=%23000000"
-                            style="filter: invert(90%) hue-rotate(180deg) grayscale(80%) contrast(120%);"
+                            style="filter: invert(100%) hue-rotate(180deg) grayscale(100%) contrast(150%) brightness(80%);"
                             class="absolute inset-0">
                         </iframe>
-                        <div class="absolute bottom-4 right-4 bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-[#D4AF37]/30 text-xs text-[#D4AF37] flex items-center gap-2">
-                            <i data-lucide="info" class="w-4 h-4"></i>
-                            Ponto de Referência: Praça Sete / Afonso Pena
+                        <!-- HUD Overlay do Mapa -->
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-sm border border-[#D4AF37]/30 text-[10px] text-[#D4AF37] flex items-center gap-2 font-mono uppercase tracking-widest shadow-lg">
+                            <span class="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-ping"></span>
+                            Target Location
                         </div>
                     </div>
                 </div>
@@ -392,57 +481,50 @@
     </section>
 
     <!-- Rodapé -->
-    <footer class="bg-[#050505] border-t border-gray-900 py-8 text-center">
+    <footer class="bg-black border-t border-gray-900 py-10 text-center relative z-10">
         <div class="max-w-7xl mx-auto px-4">
-            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mx-auto mb-4 opacity-50">
+            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mx-auto mb-4 opacity-30">
                 <path d="M50 5 L90 25 V75 L50 95 L10 75 V25 L50 5Z" stroke="#D4AF37" stroke-width="2"/>
                 <path d="M50 30 L35 70 M50 30 L65 70 M40 55 L60 55" stroke="#D4AF37" stroke-width="4"/>
             </svg>
-            <p class="text-gray-500 text-sm">© 2024 Antônio Marcos | Analista Contábil.</p>
-            <p class="text-gray-600 text-xs mt-1">Em parceria com Adriana Souza Contabilidade Ltda.</p>
+            <p class="text-gray-500 font-mono text-xs uppercase tracking-widest">© 2024 Antônio Marcos | Analista Contábil.</p>
+            <p class="text-gray-600 font-mono text-[10px] mt-2 uppercase tracking-widest">Parceiro Oficial: Adriana Souza Contabilidade Ltda.</p>
         </div>
     </footer>
 
-    <!-- Lógica de Navegação (Single Page Application) -->
+    <!-- LÓGICA DO SITE E MOTOR DE GRÁFICOS (TRADING ALGORITHM) -->
     <script>
         // Inicializar ícones
         lucide.createIcons();
 
-        // Função para alternar as páginas
+        // NAVEGAÇÃO SPA (Single Page Application)
         function navigateTo(pageId) {
-            // Oculta todas as páginas
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => {
                 page.classList.remove('active');
-                // Pequeno atraso para o display none permitir a transição de saída se quiséssemos
                 setTimeout(() => {
                     if(!page.classList.contains('active')) {
                         page.style.display = 'none';
                     }
-                }, 300);
+                }, 500);
             });
 
-            // Mostra a página solicitada
             const targetPage = document.getElementById('page-' + pageId);
-            targetPage.style.display = 'block';
-            
-            // Força um reflow para a animação CSS rodar
-            void targetPage.offsetWidth; 
-            
-            targetPage.classList.add('active');
+            setTimeout(() => {
+                targetPage.style.display = 'block';
+                void targetPage.offsetWidth; 
+                targetPage.classList.add('active');
+            }, 50);
 
-            // Atualiza o menu ativo visualmente
             const navBtns = document.querySelectorAll('.nav-btn');
             navBtns.forEach(btn => {
                 btn.classList.remove('text-[#D4AF37]');
                 btn.classList.add('text-gray-300');
             });
 
-            // Rola a página para o topo
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Função para o Menu Mobile
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             if (menu.classList.contains('hidden')) {
@@ -451,12 +533,144 @@
                 menu.classList.add('hidden');
             }
         }
-
         document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
 
-        // Define a Home como página inicial por padrão
+        // ==========================================
+        // MOTOR DO GRÁFICO DO MERCADO FINANCEIRO
+        // ==========================================
+        const chartContainer = document.getElementById('live-chart-container');
+        let candlesticks = [];
+        const numCandles = Math.floor(window.innerWidth / 35);
+
+        const COLOR_UP = 'var(--trade-green)';
+        const COLOR_DOWN = 'var(--trade-red)';
+
+        function createLiveChart() {
+            if(!chartContainer) return;
+            chartContainer.innerHTML = '';
+            candlesticks = [];
+
+            for(let i = 0; i < numCandles; i++) {
+                const candleWrapper = document.createElement('div');
+                candleWrapper.className = 'relative w-2 sm:w-3 md:w-4 flex justify-center h-full mx-1';
+                
+                const wick = document.createElement('div');
+                wick.className = 'absolute w-px bg-white/40 candle-wick';
+                
+                const body = document.createElement('div');
+                body.className = 'absolute w-full rounded-sm candle-body shadow-lg';
+
+                candleWrapper.appendChild(wick);
+                candleWrapper.appendChild(body);
+                chartContainer.appendChild(candleWrapper);
+
+                const isGreen = Math.random() > 0.4;
+                candlesticks.push({ wrapper: candleWrapper, wick, body, isGreen });
+                
+                updateCandle(candlesticks[i], i);
+            }
+        }
+
+        function updateCandle(candle, index) {
+            const height = Math.floor(Math.random() * 40) + 10;
+            const bottom = Math.floor(Math.random() * 40) + 10;
+            const wickHeight = height + Math.floor(Math.random() * 30) + 10;
+            const wickBottom = bottom - Math.floor(Math.random() * 10);
+
+            if (Math.random() > 0.8) candle.isGreen = !candle.isGreen;
+            
+            const color = candle.isGreen ? COLOR_UP : COLOR_DOWN;
+            const shadow = candle.isGreen ? '0 0 10px rgba(34,197,94,0.4)' : '0 0 10px rgba(239,68,68,0.4)';
+
+            candle.body.style.height = `${height}%`;
+            candle.body.style.bottom = `${bottom}%`;
+            candle.body.style.backgroundColor = color;
+            candle.body.style.boxShadow = shadow;
+
+            candle.wick.style.height = `${wickHeight}%`;
+            candle.wick.style.bottom = `${wickBottom}%`;
+            candle.wick.style.backgroundColor = color;
+        }
+
+        function startMarketSimulation() {
+            createLiveChart();
+            setInterval(() => {
+                const numToUpdate = Math.floor(numCandles / 3);
+                for(let i = 0; i < numToUpdate; i++) {
+                    const randomIndex = Math.floor(Math.random() * numCandles);
+                    if(candlesticks[randomIndex]) {
+                        updateCandle(candlesticks[randomIndex], randomIndex);
+                    }
+                }
+            }, 600);
+        }
+
+        // ==========================================
+        // ROTATIVIDADE DE REGIMES TRIBUTÁRIOS (TICKER)
+        // ==========================================
+        const regimesTributarios = [
+            { name: "SIMPLES NAC.", saving: "-15% CUSTO", color: "text-green-500", icon: "arrow-down-right" },
+            { name: "LUCRO PRESUM.", saving: "-22% CUSTO", color: "text-green-500", icon: "arrow-down-right" },
+            { name: "LUCRO REAL", saving: "-34% CUSTO", color: "text-[#D4AF37]", icon: "trending-down" },
+            { name: "HOLDING PAT.", saving: "BLINDADO", color: "text-blue-400", icon: "shield-check" }
+        ];
+        
+        let currentRegime = 0;
+
+        function startRegimeTicker() {
+            const nameEl = document.getElementById('regime-name');
+            const savingEl = document.getElementById('regime-saving');
+
+            if(!nameEl || !savingEl) return;
+
+            setInterval(() => {
+                nameEl.style.opacity = '0';
+                nameEl.style.transform = 'translateY(-10px)';
+                savingEl.style.opacity = '0';
+                savingEl.style.transform = 'translateY(-10px)';
+
+                setTimeout(() => {
+                    currentRegime = (currentRegime + 1) % regimesTributarios.length;
+                    const regime = regimesTributarios[currentRegime];
+
+                    nameEl.textContent = regime.name;
+                    savingEl.className = `${regime.color} text-xs font-mono mb-1 flex items-center`;
+                    savingEl.innerHTML = `<i data-lucide="${regime.icon}" class="w-3 h-3 mr-1"></i> ${regime.saving}`;
+                    
+                    lucide.createIcons();
+
+                    nameEl.style.transition = 'none';
+                    nameEl.style.transform = 'translateY(10px)';
+                    savingEl.style.transition = 'none';
+                    savingEl.style.transform = 'translateY(10px)';
+
+                    void nameEl.offsetWidth; // Reflow
+
+                    nameEl.style.transition = 'all 0.3s ease';
+                    nameEl.style.opacity = '1';
+                    nameEl.style.transform = 'translateY(0)';
+                    
+                    savingEl.style.transition = 'all 0.3s ease';
+                    savingEl.style.opacity = '1';
+                    savingEl.style.transform = 'translateY(0)';
+                    
+                }, 300);
+            }, 3000);
+        }
+
+        // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             navigateTo('home');
+            startMarketSimulation();
+            startRegimeTicker();
+        });
+
+        // Recalcular no redimensionamento da janela
+        window.addEventListener('resize', () => {
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(() => {
+                startMarketSimulation();
+            }, 250);
         });
     </script>
 </body>
