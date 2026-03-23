@@ -330,33 +330,29 @@
                 </div>
                 
                 <div class="order-1 md:order-2 relative">
-                    <!-- Foto Profissional com Fallback -->
+                    <!-- Foto Profissional Limpa e com Alta Qualidade -->
                     <div class="aspect-[4/5] rounded-sm overflow-hidden glass-panel relative group border border-gray-800 bg-[#0a0a0c]">
                         
-                        <!-- Fallback Elegante (Fica por trás e só aparece se a imagem falhar o carregamento) -->
+                        <!-- Fallback Elegante -->
                         <div class="absolute inset-0 flex flex-col items-center justify-center opacity-20">
                             <i data-lucide="shield-check" class="w-24 h-24 text-[#D4AF37] mb-4"></i>
                             <span class="font-mono text-[#D4AF37] text-xs uppercase tracking-widest">Proteção Ativa</span>
                         </div>
 
-                        <!-- Sua Foto Real (com onerror para esconder o ícone de quebrado) -->
-                        <!-- ATENÇÃO: O ficheiro no GitHub tem de se chamar exatamente "minha-foto1.jpg" -->
+                        <!-- Sua Foto Real (Filtros escuros e scanlines removidos para mostrar a qualidade original) -->
                         <img src="minha-foto1.jpg" 
                              alt="Antônio Marcos" 
                              onerror="this.style.display='none'"
-                             class="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 z-10">
-                        
-                        <!-- Overlay estilo scanner digital -->
-                        <div class="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.2)_50%)] bg-[size:100%_4px] pointer-events-none opacity-50 z-20"></div>
+                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-10">
 
-                        <!-- Identificação -->
+                        <!-- Identificação (Mantida na parte inferior) -->
                         <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/90 to-transparent z-30 border-t border-[#D4AF37]/20">
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <h3 class="text-2xl font-bold text-white font-serif tracking-wide">Antônio Marcos</h3>
-                                    <p class="text-[#D4AF37] font-mono text-xs uppercase tracking-widest mt-1">Analista & Estrategista</p>
+                                    <h3 class="text-2xl font-bold text-white font-serif tracking-wide drop-shadow-lg">Antônio Marcos</h3>
+                                    <p class="text-[#D4AF37] font-mono text-xs uppercase tracking-widest mt-1 drop-shadow-md">Analista & Estrategista</p>
                                 </div>
-                                <i data-lucide="shield-check" class="w-6 h-6 text-[#D4AF37]"></i>
+                                <i data-lucide="shield-check" class="w-6 h-6 text-[#D4AF37] drop-shadow-md"></i>
                             </div>
                         </div>
                     </div>
@@ -456,7 +452,7 @@
                         </a>
                     </div>
 
-                    <!-- Mapa com Filtro Escuro -->
+                    <!-- Mapa com Filtro Ajustado e Legível -->
                     <div class="h-80 lg:h-auto min-h-[400px] w-full relative border-l border-gray-800">
                         <iframe 
                             width="100%" 
@@ -466,7 +462,7 @@
                             marginheight="0" 
                             marginwidth="0" 
                             src="https://maps.google.com/maps?q=Condominio+do+Edificio+Avenida+Rua+Sao+Paulo+409+Belo+Horizonte&t=m&z=17&output=embed&iwloc=near&color=%23000000"
-                            style="filter: invert(100%) hue-rotate(180deg) grayscale(100%) contrast(150%) brightness(80%);"
+                            style="filter: invert(90%) hue-rotate(180deg) contrast(110%) brightness(110%);"
                             class="absolute inset-0">
                         </iframe>
                         <!-- HUD Overlay do Mapa -->
