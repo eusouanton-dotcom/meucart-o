@@ -9,8 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts ATUALIZADAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -25,12 +25,17 @@
         body {
             background-color: var(--bg-dark);
             color: #e2e8f0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .font-serif {
-            font-family: 'Playfair Display', serif;
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        .font-serif {
+            font-family: 'Lora', serif;
         }
 
         .font-mono {
@@ -66,7 +71,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* Animação do Ticker (Fita Financeira) */
+        /* Animação do Ticker */
         .ticker-wrap {
             width: 100%;
             overflow: hidden;
@@ -98,12 +103,11 @@
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
         }
 
-        /* Transições de Candlesticks gerados via JS */
         .candle-body, .candle-wick {
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Sistema de Páginas (SPA) */
+        /* SPA */
         .page-section {
             display: none;
             opacity: 0;
@@ -115,11 +119,49 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0a0c; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #D4AF37; 
+            border-radius: 4px;
+        }
+
+        /* Estilo do Slider da Calculadora */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            border: 2px solid #fff;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#D4AF37] selection:text-black">
 
-    <!-- Fita Ticker (Topo estilo bolsa de valores) -->
+    <!-- Fita Ticker (Topo) -->
     <div class="fixed top-0 left-0 w-full z-[60] ticker-wrap py-1.5 hidden md:block">
         <div class="ticker-move text-xs font-mono tracking-widest text-gray-400">
             <span class="mx-6"><strong class="text-[#D4AF37]">AMX INDEX</strong> 104.50 <span class="text-green-500">▲ +1.2%</span></span>
@@ -127,7 +169,7 @@
             <span class="mx-6"><strong class="text-[#D4AF37]">RISCO FISCAL</strong> <span class="text-green-500">▼ 0.00%</span></span>
             <span class="mx-6"><strong class="text-gray-300">CRÉDITOS RECUPERADOS</strong> <span class="text-green-500">▲ +R$ 2.4M</span></span>
             <span class="mx-6"><strong class="text-gray-300">MULTAS E AUTUAÇÕES</strong> <span class="text-red-500">▼ EVITADO</span></span>
-            <!-- Repetição para loop contínuo -->
+            <!-- Repetição -->
             <span class="mx-6"><strong class="text-[#D4AF37]">AMX INDEX</strong> 104.50 <span class="text-green-500">▲ +1.2%</span></span>
             <span class="mx-6"><strong class="text-gray-300">CARGA TRIBUTÁRIA MÉDIA</strong> <span class="text-green-500">▼ -18.4% (OTIMIZADO)</span></span>
             <span class="mx-6"><strong class="text-[#D4AF37]">RISCO FISCAL</strong> <span class="text-green-500">▼ 0.00%</span></span>
@@ -160,9 +202,16 @@
 
                 <!-- Menu Desktop -->
                 <div class="hidden md:flex space-x-8">
-                    <button onclick="navigateTo('home')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Terminal</button>
-                    <button onclick="navigateTo('historia')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Nossa História</button>
-                    <button onclick="navigateTo('solucoes')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Operações</button>
+                    <button onclick="navigateTo('home')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Home</button>
+                    <button onclick="navigateTo('historia')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">História</button>
+                    <button onclick="navigateTo('estrategia')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide">Estratégia e Estrutura</button>
+                    <button onclick="navigateTo('insights')" class="nav-btn text-gray-300 hover:text-[#D4AF37] transition-colors text-sm font-medium uppercase tracking-wide relative">
+                        Insights
+                        <span class="absolute -top-2 -right-3 flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-[#D4AF37]"></span>
+                        </span>
+                    </button>
                 </div>
 
                 <!-- Botão CTA Menu -->
@@ -183,68 +232,56 @@
 
         <!-- Menu Mobile Overlay -->
         <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-gold/20 absolute w-full left-0 top-20 flex flex-col items-center py-6 space-y-6 shadow-2xl">
-            <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Terminal</button>
-            <button onclick="navigateTo('historia'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Nossa História</button>
-            <button onclick="navigateTo('solucoes'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Operações & Contato</button>
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Home</button>
+            <button onclick="navigateTo('historia'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">História</button>
+            <button onclick="navigateTo('estrategia'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Estratégia e Estrutura</button>
+            <button onclick="navigateTo('insights'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Insights</button>
             <a href="https://wa.me/5531971743868?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20consultoria." target="_blank" class="bg-gradient-gold text-black px-8 py-3 rounded-sm font-bold uppercase tracking-wider">Agendar Consultoria</a>
         </div>
     </nav>
 
     <!-- ==========================================
-         PÁGINA 1: INÍCIO (HERO - TRADING TERMINAL)
+         PÁGINA 1: HOME (TRADING TERMINAL)
          ========================================== -->
-    <section id="page-home" class="page-section active relative w-full h-screen min-h-[800px] overflow-hidden bg-[#020202]">
-        
-        <!-- Fundo: Grid e Gráfico de Velas em Tempo Real -->
+    <section id="page-home" class="page-section active relative w-full min-h-screen overflow-hidden bg-[#020202] pt-32 pb-24 flex items-center">
         <div class="absolute inset-0 z-0">
-            <!-- Grid Lines -->
             <div class="absolute inset-0 trading-grid opacity-60"></div>
-            <!-- Container do Gráfico JS -->
-            <div id="live-chart-container" class="absolute inset-x-0 bottom-0 h-[70%] flex items-end justify-around px-2 pb-10 opacity-30 pointer-events-none">
-                <!-- Candlesticks injetados pelo JavaScript aqui -->
-            </div>
-            <!-- Overlay escuro para garantir leitura do texto -->
+            <div id="live-chart-container" class="absolute inset-x-0 bottom-0 h-[70%] flex items-end justify-around px-2 pb-10 opacity-30 pointer-events-none"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-[#050506] via-[#050506]/90 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-[#050506] via-transparent to-transparent"></div>
         </div>
 
-        <!-- Conteúdo Principal Flutuante -->
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center pt-20">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="grid lg:grid-cols-12 gap-8 items-center">
-                
-                <!-- Bloco de Texto (Esquerda) -->
                 <div class="lg:col-span-7 space-y-8">
                     
-                    <!-- Status Live -->
-                    <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded bg-black/50 border border-green-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+                    <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded bg-black/50 border border-red-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(239,68,68,0.15)]">
                         <div class="relative flex h-2.5 w-2.5">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
                         </div>
-                        <span class="text-[10px] font-mono font-bold text-green-400 tracking-widest uppercase">Estratégia Ativa</span>
+                        <span class="text-[10px] font-mono font-bold text-red-400 tracking-widest uppercase">Alerta de Risco Fiscal</span>
                     </div>
                     
                     <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-white drop-shadow-lg">
-                        Contabilidade <br> não é custo. <br>
-                        <span class="text-gradient-gold font-serif italic text-6xl lg:text-8xl">É inteligência.</span>
+                        Você trabalha. <br> O Fisco lucra. <br>
+                        <span class="text-gradient-gold font-serif italic text-5xl lg:text-7xl tracking-tight">Vamos inverter o jogo?</span>
                     </h1>
                     
                     <p class="text-lg text-gray-300 leading-relaxed max-w-xl font-light border-l-2 border-[#D4AF37] pl-4">
-                        Revolucione os números da sua empresa. Analisamos o seu cenário, cortamos impostos indevidos e transformamos o seu balanço em um verdadeiro <strong class="text-white font-semibold">ativo de alta performance</strong>.
+                        Mais de <strong class="text-white font-semibold">70% das empresas</strong> pagam impostos indevidos silenciosamente. Atuamos com engenharia tributária para estancar essa sangria, blindar o seu patrimônio e devolver o dinheiro <strong class="text-[#D4AF37] font-semibold">para o seu caixa</strong>.
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Minha%20empresa%20precisa%20de%20uma%20revis%C3%A3o%20e%20consultoria." target="_blank" class="bg-gradient-gold text-black px-8 py-4 rounded-sm font-bold font-mono text-center flex items-center justify-center gap-3 hover:scale-105 transition-all uppercase tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-                            <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                            Agendar Consultoria
+                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20para%20blindar%20a%20minha%20empresa." target="_blank" class="bg-gradient-gold text-black px-8 py-4 rounded-sm font-bold font-mono text-center flex items-center justify-center gap-3 hover:scale-105 transition-all uppercase tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.3)] group">
+                            <i data-lucide="shield-alert" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                            Blindar Minha Empresa Agora
                         </a>
                     </div>
                 </div>
 
-                <!-- Bloco de Dados de Mercado (Direita) -->
                 <div class="lg:col-span-5 hidden lg:block">
                     <div class="glass-panel p-6 rounded-lg border-t-2 border-t-[#D4AF37] relative">
-                        <!-- Corner Decorations -->
                         <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#D4AF37]"></div>
                         <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#D4AF37]"></div>
                         <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#D4AF37]"></div>
@@ -255,9 +292,7 @@
                             <i data-lucide="activity" class="w-5 h-5 text-[#D4AF37]"></i>
                         </div>
 
-                        <!-- Indicadores Dinâmicos -->
                         <div class="space-y-6">
-                            <!-- Taxa Tributária (Animada como um Ticker) -->
                             <div>
                                 <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
                                     <span>ENQUADRAMENTO FISCAL</span>
@@ -271,16 +306,13 @@
                                 </div>
                             </div>
 
-                            <!-- Gráfico de Linha Simples -->
                             <div class="h-16 w-full relative border-y border-gray-800/50 py-2">
                                 <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-                                    <!-- Tendência de Lucro -->
                                     <path d="M 0 80 Q 20 70, 40 85 T 70 40 T 100 20" fill="none" stroke="#22c55e" stroke-width="2" class="opacity-80"/>
                                     <circle cx="100" cy="20" r="3" fill="#22c55e" class="animate-pulse" />
                                 </svg>
                             </div>
 
-                            <!-- Painel de Tickers Secundários -->
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-black/40 p-3 rounded border border-gray-800">
                                     <p class="text-[10px] text-gray-500 font-mono uppercase">Proteção de Capital</p>
@@ -294,13 +326,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- ==========================================
-         PÁGINA 2: NOSSA HISTÓRIA
+         PÁGINA 2: HISTÓRIA
          ========================================== -->
     <section id="page-historia" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#050506]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
@@ -321,7 +352,6 @@
                         Em parceria com a <strong class="text-white font-medium border-b border-gray-600">Adriana Souza Contabilidade Ltda</strong>, o nosso método une rigor técnico a uma visão de investimentos. Nós não nos limitamos a processar folha de pagamento; nós mapeamos o risco, calibramos o regime tributário e blindamos o seu patrimônio como quem gere um fundo de alto risco.
                     </p>
                     
-                    <!-- Quote Box -->
                     <div class="glass-panel p-6 rounded-sm border-l-4 border-l-[#D4AF37] mt-8 bg-black/40 relative">
                         <i data-lucide="quote" class="absolute top-4 right-4 w-8 h-8 text-[#D4AF37] opacity-20"></i>
                         <h3 class="text-lg font-bold text-white font-mono uppercase tracking-widest mb-2 text-[#D4AF37]">Nossa Tese</h3>
@@ -330,22 +360,12 @@
                 </div>
                 
                 <div class="order-1 md:order-2 relative">
-                    <!-- Foto Profissional Limpa e com Alta Qualidade -->
                     <div class="aspect-[4/5] rounded-sm overflow-hidden glass-panel relative group border border-gray-800 bg-[#0a0a0c]">
-                        
-                        <!-- Fallback Elegante -->
                         <div class="absolute inset-0 flex flex-col items-center justify-center opacity-20">
                             <i data-lucide="shield-check" class="w-24 h-24 text-[#D4AF37] mb-4"></i>
                             <span class="font-mono text-[#D4AF37] text-xs uppercase tracking-widest">Proteção Ativa</span>
                         </div>
-
-                        <!-- Sua Foto Real (Filtros escuros e scanlines removidos para mostrar a qualidade original) -->
-                        <img src="minha-foto1.jpg" 
-                             alt="Antônio Marcos" 
-                             onerror="this.style.display='none'"
-                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-10">
-
-                        <!-- Identificação (Mantida na parte inferior) -->
+                        <img src="minha-foto1.jpg" alt="Antônio Marcos" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-10">
                         <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/90 to-transparent z-30 border-t border-[#D4AF37]/20">
                             <div class="flex justify-between items-end">
                                 <div>
@@ -362,70 +382,130 @@
     </section>
 
     <!-- ==========================================
-         PÁGINA 3: SOLUÇÕES E CONTATO
+         PÁGINA 3: ESTRATÉGIA E ESTRUTURA
          ========================================== -->
-    <section id="page-solucoes" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#020202]">
+    <section id="page-estrategia" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#020202]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
             
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Operações & Estrutura</h2>
+                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Estratégia & Estrutura</h2>
                 <div class="h-1 w-24 bg-gradient-gold mx-auto rounded-full mb-8"></div>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">As nossas soluções funcionam como engrenagens de um sistema financeiro focado em garantir liquidez, conformidade e redução agressiva (mas legal) de custos.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Não entregamos apenas guias de impostos. Construímos um ecossistema financeiro à prova de balas para a sua empresa lucrar mais todos os meses.</p>
             </div>
 
-            <!-- Grid de Serviços -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-                <!-- Card 1 -->
-                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
-                    <div class="mb-6 flex items-center justify-between">
-                        <i data-lucide="crosshair" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
-                        <span class="text-gray-700 font-mono text-sm font-bold">01</span>
+            <div class="grid lg:grid-cols-12 gap-10 mb-20">
+                <!-- COLUNA ESQUERDA: Os 4 Pilares -->
+                <div class="lg:col-span-7 space-y-4">
+                    <h3 class="text-[#D4AF37] font-mono text-sm uppercase tracking-widest mb-6">Metodologia de Atuação</h3>
+                    
+                    <div class="glass-panel p-6 rounded-sm group hover:border-[#D4AF37]/60 transition-all border border-gray-800 bg-[#050506] hover:bg-[#0a0a0c] hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(212,175,55,0.1)]">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
+                                <i data-lucide="crosshair" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Revisão Tributária</h4>
+                                    <span class="text-green-500 font-mono text-[10px] bg-green-500/10 px-2 py-1 rounded border border-green-500/30">Target: -15% Custo</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Auditoria profunda para estancar vazamentos financeiros. Mapeamos o enquadramento perfeito para que pague estritamente o mínimo imposto exigido por lei.</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Revisão Tributária</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Auditoria profunda para estancar vazamentos financeiros. Mapeamos o enquadramento perfeito para que pague estritamente o mínimo imposto exigido por lei.</p>
+
+                    <div class="glass-panel p-6 rounded-sm group hover:border-[#D4AF37]/60 transition-all border border-gray-800 bg-[#050506] hover:bg-[#0a0a0c] hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(212,175,55,0.1)]">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
+                                <i data-lucide="pie-chart" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Inteligência de Dados</h4>
+                                    <span class="text-[#D4AF37] font-mono text-[10px] bg-[#D4AF37]/10 px-2 py-1 rounded border border-[#D4AF37]/30">Decisão Clara</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Raio-X financeiro do seu negócio. Transformamos números abstratos em painéis de controle visuais para que saiba exatamente qual é a sua margem de lucro real.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-sm group hover:border-[#D4AF37]/60 transition-all border border-gray-800 bg-[#050506] hover:bg-[#0a0a0c] hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(212,175,55,0.1)]">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
+                                <i data-lucide="shield" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Blindagem e Conformidade</h4>
+                                    <span class="text-blue-400 font-mono text-[10px] bg-blue-500/10 px-2 py-1 rounded border border-blue-500/30">Risco Zero</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Dados processados com precisão cirúrgica. Garantimos 100% de conformidade, evitando passivos, multas e blindando a sua operação contra fiscalizações.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-sm group hover:border-[#D4AF37]/60 transition-all border border-gray-800 bg-[#050506] hover:bg-[#0a0a0c] hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(212,175,55,0.1)]">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Gestão de Passivos Laborais</h4>
+                                    <span class="text-purple-400 font-mono text-[10px] bg-purple-500/10 px-2 py-1 rounded border border-purple-500/30">RH Seguro</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Administração segura das rotinas de RH. Mitigamos dores de cabeça com cálculos exatos de holerites, férias, rescisões e proteção contra processos trabalhistas.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
-                    <div class="mb-6 flex items-center justify-between">
-                        <i data-lucide="database" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
-                        <span class="text-gray-700 font-mono text-sm font-bold">02</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Escrituração Fiscal</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Dados processados com precisão cirúrgica. Garantimos 100% de conformidade, evitando passivos, multas e garantindo a entrega pontual de todas as obrigações.</p>
-                </div>
+                <!-- COLUNA DIREITA: Simulador de Risco -->
+                <div class="lg:col-span-5">
+                    <div class="glass-panel p-8 rounded-sm border-t-4 border-t-red-500 bg-[#0a0a0c] sticky top-28 shadow-[0_20px_50px_rgba(239,68,68,0.1)]">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                            <span class="text-red-400 font-mono text-xs tracking-widest uppercase font-bold">Simulador de Sangria Fiscal</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white font-serif mb-2">Quanto você pode estar perdendo?</h3>
+                        <p class="text-gray-400 text-sm font-light mb-8 leading-relaxed">Em média, empresas com contabilidade desatualizada perdem <strong class="text-white">8% a 12%</strong> do faturamento em impostos invisíveis. Calcule o seu risco:</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-gray-400 font-mono text-[10px] uppercase mb-3">
+                                    <span>Faturamento Mensal</span>
+                                    <span id="faturamento-display" class="text-white font-bold text-sm">R$ 100.000,00</span>
+                                </div>
+                                <input type="range" id="revenueSlider" min="30000" max="1000000" step="10000" value="100000" oninput="calcularRisco()">
+                                <div class="flex justify-between text-gray-600 font-mono text-[10px] mt-2">
+                                    <span>R$ 30 Mil</span>
+                                    <span>R$ 1 Milhão+</span>
+                                </div>
+                            </div>
 
-                <!-- Card 3 -->
-                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
-                    <div class="mb-6 flex items-center justify-between">
-                        <i data-lucide="pie-chart" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
-                        <span class="text-gray-700 font-mono text-sm font-bold">03</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Balanço e DRE</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Raio-X financeiro do seu negócio. Transformamos números abstratos em painéis de controle visuais para que saiba exatamente qual é a sua margem de lucro real.</p>
-                </div>
+                            <div class="bg-red-500/10 border border-red-500/20 p-5 rounded-sm relative overflow-hidden">
+                                <i data-lucide="trending-down" class="absolute -right-4 -bottom-4 w-24 h-24 text-red-500 opacity-10"></i>
+                                <p class="text-red-400 font-mono text-[10px] uppercase tracking-widest mb-1">Perda Anual Estimada (8%)</p>
+                                <p id="perda-display" class="text-4xl font-bold text-white font-mono tracking-tighter text-red-500 shadow-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]">R$ 96.000,00</p>
+                                <p class="text-gray-400 text-xs mt-2 font-light">Este é o valor que deixa na mesa todos os anos por não ter uma estratégia ativa.</p>
+                            </div>
 
-                <!-- Card 4 -->
-                <div class="glass-panel p-8 rounded-sm group hover:border-[#D4AF37]/50 transition-colors border-t-2 border-t-transparent hover:border-t-[#D4AF37]">
-                    <div class="mb-6 flex items-center justify-between">
-                        <i data-lucide="users" class="w-8 h-8 text-[#D4AF37] group-hover:scale-110 transition-transform"></i>
-                        <span class="text-gray-700 font-mono text-sm font-bold">04</span>
+                            <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Fiz%20o%20teste%20no%20simulador%20e%20gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20para%20estancar%20esta%20perda." target="_blank" class="w-full bg-gradient-gold text-black font-bold font-mono uppercase tracking-widest py-4 rounded shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-white transition-colors text-sm flex items-center justify-center gap-2 group">
+                                <i data-lucide="shield-check" class="w-5 h-5 group-hover:scale-110 transition-transform"></i> Estancar Perda Agora
+                            </a>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-3 uppercase tracking-wider font-mono">Gestão de Folha</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">Gestão de passivos laborais mitigada a zero. Administração segura das rotinas de RH, holerites, férias e rescisões com cálculos exatos.</p>
                 </div>
             </div>
 
-            <!-- Seção de Contato -->
+            <!-- Contato -->
             <div class="glass-panel border-l-4 border-l-[#D4AF37] relative overflow-hidden bg-[#0a0a0c]">
                 <div class="grid lg:grid-cols-2">
-                    <!-- Informações -->
                     <div class="p-10 lg:p-16 flex flex-col justify-center relative z-10">
                         <div class="flex items-center gap-2 mb-4">
                             <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                             <span class="text-green-500 font-mono text-xs tracking-widest uppercase">Agenda Aberta</span>
                         </div>
-                        <h2 class="text-3xl font-bold text-white font-serif mb-4">Inicie a otimização agora.</h2>
+                        <h2 class="text-3xl font-bold text-white font-serif mb-4">Inicie a otimização hoje.</h2>
                         <p class="text-gray-400 mb-8 font-light">Agende uma reunião direta comigo ou visite o nosso quartel-general no centro de Belo Horizonte para um diagnóstico estrutural.</p>
 
                         <div class="space-y-6 mb-10">
@@ -436,7 +516,6 @@
                                     <p class="text-gray-400 text-sm font-light">Rua São Paulo, nº 409 - Andar 17, Sala 1707<br>Edifício Avenida (Esq. Av. Afonso Pena)<br>Belo Horizonte - MG</p>
                                 </div>
                             </div>
-                            
                             <div class="flex items-center gap-4">
                                 <div class="bg-[#D4AF37]/10 p-3 rounded-sm border border-[#D4AF37]/20"><i data-lucide="mail" class="w-5 h-5 text-[#D4AF37]"></i></div>
                                 <div>
@@ -445,30 +524,14 @@
                                 </div>
                             </div>
                         </div>
-
-                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20uma%20reuni%C3%A3o%20para%20revis%C3%A3o%20cont%C3%A1bil." target="_blank" class="bg-gradient-gold text-black px-8 py-4 rounded-sm font-bold text-center flex items-center justify-center gap-3 hover:bg-white transition-colors w-full sm:w-auto self-start uppercase font-mono tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-                            <i data-lucide="smartphone" class="w-5 h-5"></i>
-                            Agendar Consultoria
+                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20uma%20reuni%C3%A3o%20para%20revis%C3%A3o%20cont%C3%A1bil." target="_blank" class="bg-transparent border border-[#D4AF37] text-[#D4AF37] font-bold text-center flex items-center justify-center gap-3 hover:bg-[#D4AF37] hover:text-black transition-colors w-full sm:w-auto self-start uppercase font-mono tracking-wider px-8 py-4 rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.1)]">
+                            <i data-lucide="calendar" class="w-5 h-5"></i> Agendar Consultoria Presencial
                         </a>
                     </div>
-
-                    <!-- Mapa com Filtro Ajustado e Legível -->
                     <div class="h-80 lg:h-auto min-h-[400px] w-full relative border-l border-gray-800">
-                        <iframe 
-                            width="100%" 
-                            height="100%" 
-                            frameborder="0" 
-                            scrolling="no" 
-                            marginheight="0" 
-                            marginwidth="0" 
-                            src="https://maps.google.com/maps?q=Condominio+do+Edificio+Avenida+Rua+Sao+Paulo+409+Belo+Horizonte&t=m&z=17&output=embed&iwloc=near&color=%23000000"
-                            style="filter: invert(90%) hue-rotate(180deg) contrast(110%) brightness(110%);"
-                            class="absolute inset-0">
-                        </iframe>
-                        <!-- HUD Overlay do Mapa -->
+                        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Condominio+do+Edificio+Avenida+Rua+Sao+Paulo+409+Belo+Horizonte&t=m&z=17&output=embed&iwloc=near&color=%23000000" style="filter: invert(90%) hue-rotate(180deg) contrast(110%) brightness(110%);" class="absolute inset-0"></iframe>
                         <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-sm border border-[#D4AF37]/30 text-[10px] text-[#D4AF37] flex items-center gap-2 font-mono uppercase tracking-widest shadow-lg">
-                            <span class="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-ping"></span>
-                            Target Location
+                            <span class="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-ping"></span> Target Location
                         </div>
                     </div>
                 </div>
@@ -476,25 +539,232 @@
         </div>
     </section>
 
+    <!-- ==========================================
+         PÁGINA 4: INSIGHTS (RADAR REAL)
+         ========================================== -->
+    <section id="page-insights" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#050506]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded border border-green-500/30 bg-green-500/10">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+                    <span class="text-green-400 font-mono text-[10px] uppercase tracking-widest font-bold">Conexão API Ativa</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Radar Financeiro Local</h2>
+                <div class="h-1 w-24 bg-gradient-gold mx-auto rounded-full mb-8"></div>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Dados econômicos e notícias de negócios do Brasil importados em tempo real diretamente das principais fontes abertas do mercado.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <!-- Coluna Principal: Live News Feed (API) -->
+                <div class="lg:col-span-2 glass-panel p-6 rounded-sm border-t-2 border-t-[#D4AF37] flex flex-col h-[650px]">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-4">
+                        <h3 class="text-white font-mono text-sm uppercase tracking-widest flex items-center gap-2">
+                            <i data-lucide="rss" class="w-4 h-4 text-[#D4AF37]"></i> Notícias Oficiais (G1 Economia)
+                        </h3>
+                        <span class="text-green-500 font-mono text-[10px] uppercase flex items-center gap-1" id="last-update-time">
+                            <i data-lucide="refresh-ccw" class="w-3 h-3"></i> Sincronizando...
+                        </span>
+                    </div>
+                    
+                    <div id="live-news-feed" class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <!-- Esqueleto de Carregamento -->
+                        <div id="loading-feed" class="flex flex-col items-center justify-center h-full opacity-50">
+                            <i data-lucide="loader" class="w-8 h-8 text-[#D4AF37] animate-spin mb-4"></i>
+                            <p class="text-gray-400 font-mono text-xs tracking-widest uppercase">Estabelecendo conexão segura com portal de notícias...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coluna Secundária: Cotações Reais e Leads -->
+                <div class="lg:col-span-1 space-y-6">
+                    
+                    <!-- Micro Dashboard: Câmbio Oficial AwesomeAPI -->
+                    <div class="glass-panel p-6 rounded-sm border border-gray-800">
+                        <h4 class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i data-lucide="globe" class="w-3 h-3"></i> Câmbio Oficial (Live)
+                        </h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
+                                    <span>Dólar Comercial (USD)</span>
+                                    <span class="text-white font-bold" id="metric-usd">R$ 0,00</span>
+                                </div>
+                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                                    <div id="bar-usd" class="h-full bg-green-500 w-[50%] transition-all duration-1000"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
+                                    <span>Euro (EUR)</span>
+                                    <span class="text-white font-bold" id="metric-eur">R$ 0,00</span>
+                                </div>
+                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                                    <div id="bar-eur" class="h-full bg-blue-500 w-[60%] transition-all duration-1000"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-gray-600 font-mono mt-4 text-center">Fonte: AwesomeAPI Câmbio</p>
+                    </div>
+
+                    <!-- Formulário de Leads -->
+                    <div class="glass-panel p-6 rounded-sm border border-[#D4AF37]/30 bg-[#0a0a0c] relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/5 rounded-full blur-[30px]"></div>
+                        <h3 class="text-lg font-bold text-white font-serif mb-2 relative z-10">Blindagem Antecipada</h3>
+                        <p class="text-gray-400 text-xs font-light mb-6 relative z-10">Receba nossas análises exclusivas baseadas nas movimentações reais do mercado.</p>
+                        
+                        <form id="leadForm" onsubmit="capturarLead(event)" class="space-y-4 relative z-10">
+                            <div>
+                                <input type="text" id="leadName" required class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-all font-light text-xs font-mono" placeholder="NOME DO GESTOR">
+                            </div>
+                            <div>
+                                <input type="tel" id="leadPhone" required class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-all font-light text-xs font-mono" placeholder="WHATSAPP (XX) XXXXX-XXXX">
+                            </div>
+                            <button type="submit" class="w-full bg-[#D4AF37] text-black font-bold font-mono uppercase tracking-widest py-2 rounded shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:bg-white transition-colors text-xs">
+                                Ativar Proteção
+                            </button>
+                        </form>
+                        
+                        <div id="leadSuccess" class="hidden mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded text-center relative z-10">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mx-auto mb-1"></i>
+                            <p class="text-green-400 text-[10px] font-mono uppercase">Inscrição confirmada!</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PÁGINA SECRETA: PAINEL DE CONTROLE (ADMIN)
+         ========================================== -->
+    <section id="page-admin" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#020202]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+            
+            <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white font-mono flex items-center gap-3">
+                        <i data-lucide="terminal" class="w-6 h-6 text-[#D4AF37]"></i> AMX ADMIN TERMINAL
+                    </h2>
+                    <p class="text-gray-500 font-mono text-xs mt-1 tracking-widest uppercase">Central de Inteligência de Leads</p>
+                </div>
+                <button onclick="sairPainel()" class="text-red-500 hover:text-red-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2 border border-red-500/30 px-3 py-1.5 rounded">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Encerrar Sessão
+                </button>
+            </div>
+
+            <!-- KPIs -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="glass-panel p-6 rounded border-t-2 border-t-blue-500">
+                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Acessos Totais</p>
+                    <div class="flex items-end gap-3">
+                        <span id="counter-visits" class="text-3xl font-bold text-white font-mono">142</span>
+                        <span class="text-blue-500 text-xs font-mono mb-1"><i data-lucide="activity" class="w-3 h-3 inline"></i> Online</span>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 rounded border-t-2 border-t-green-500">
+                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Leads Capturados</p>
+                    <div class="flex items-end gap-3">
+                        <span id="counter-leads" class="text-3xl font-bold text-white font-mono">0</span>
+                        <span class="text-green-500 text-xs font-mono mb-1">Na Base</span>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 rounded border-t-2 border-t-[#D4AF37]">
+                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Status do Sistema</p>
+                    <div class="flex items-end gap-3">
+                        <span class="text-xl font-bold text-[#D4AF37] font-mono mt-1">OPERACIONAL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela de Leads -->
+            <div class="glass-panel rounded border border-gray-800 overflow-hidden">
+                <div class="bg-black/50 p-4 border-b border-gray-800 flex justify-between items-center">
+                    <h3 class="text-white font-mono text-sm uppercase tracking-widest">Base de Dados (Leads Recentes)</h3>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-900/50 text-gray-500 font-mono text-[10px] uppercase tracking-widest">
+                                <th class="p-4 font-normal">Data</th>
+                                <th class="p-4 font-normal">Nome do Empresário</th>
+                                <th class="p-4 font-normal">Telefone / WhatsApp</th>
+                                <th class="p-4 font-normal">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody" class="text-gray-300 font-light text-sm">
+                            <tr id="emptyState" class="border-t border-gray-800/50">
+                                <td colspan="4" class="p-8 text-center text-gray-600 font-mono text-xs">Nenhum lead capturado nesta sessão.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-red-500/5 border border-red-500/20 rounded">
+                <p class="text-red-400 font-mono text-[10px] uppercase flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    Aviso: Como o site está hospedado num servidor estático (GitHub), estes leads são apagados ao recarregar a página.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Modal de Login do Admin -->
+    <div id="loginModal" class="fixed inset-0 z-[80] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel p-8 rounded border border-gray-800 w-full max-w-sm">
+            <div class="flex justify-center mb-6">
+                <i data-lucide="lock" class="w-8 h-8 text-[#D4AF37]"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white font-mono text-center mb-6">Acesso Restrito</h2>
+            <input type="password" id="adminPin" class="w-full bg-black border border-gray-800 rounded px-4 py-3 text-center text-white tracking-[0.5em] focus:border-[#D4AF37] outline-none font-mono mb-4" placeholder="••••••">
+            <button onclick="validarAcesso()" class="w-full bg-[#D4AF37] text-black font-bold font-mono uppercase tracking-widest py-3 rounded hover:bg-white transition-colors">
+                Autenticar
+            </button>
+            <p id="loginError" class="text-red-500 text-xs font-mono text-center mt-3 hidden">Credenciais Inválidas</p>
+            <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="w-full text-center text-gray-500 text-xs font-mono mt-4 uppercase hover:text-white">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Botão Flutuante do WhatsApp (Sempre visível) -->
+    <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Acessei%20seu%20site%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" class="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:scale-110 transition-transform flex items-center justify-center group">
+        <span class="absolute right-full mr-4 bg-black/80 text-white text-xs font-mono px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-gray-800">Falar com o Analista</span>
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+        <span class="absolute inset-0 rounded-full border-2 border-green-500 animate-ping opacity-75"></span>
+    </a>
+
     <!-- Rodapé -->
-    <footer class="bg-black border-t border-gray-900 py-10 text-center relative z-10">
-        <div class="max-w-7xl mx-auto px-4">
-            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mx-auto mb-4 opacity-30">
+    <footer class="bg-black border-t border-gray-900 py-10 text-center relative z-10 pb-24 lg:pb-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mb-4 opacity-30">
                 <path d="M50 5 L90 25 V75 L50 95 L10 75 V25 L50 5Z" stroke="#D4AF37" stroke-width="2"/>
                 <path d="M50 30 L35 70 M50 30 L65 70 M40 55 L60 55" stroke="#D4AF37" stroke-width="4"/>
             </svg>
             <p class="text-gray-500 font-mono text-xs uppercase tracking-widest">© 2024 Antônio Marcos | Analista Contábil.</p>
-            <p class="text-gray-600 font-mono text-[10px] mt-2 uppercase tracking-widest">Parceiro Oficial: Adriana Souza Contabilidade Ltda.</p>
+            <p class="text-gray-600 font-mono text-[10px] mt-2 uppercase tracking-widest mb-6">Parceiro Oficial: Adriana Souza Contabilidade Ltda.</p>
+            
+            <button onclick="abrirLogin()" class="text-gray-800 hover:text-[#D4AF37] transition-colors p-2 rounded-full" title="Painel do Analista">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+            </button>
         </div>
     </footer>
 
-    <!-- LÓGICA DO SITE E MOTOR DE GRÁFICOS (TRADING ALGORITHM) -->
+    <!-- LÓGICA DE APIs E COMPORTAMENTO -->
     <script>
-        // Inicializar ícones
         lucide.createIcons();
 
-        // NAVEGAÇÃO SPA (Single Page Application)
+        // -------------------------
+        // NAVEGAÇÃO E SIMULADOR
+        // -------------------------
+        let currentPage = 'home';
+        
         function navigateTo(pageId) {
+            simulatedVisits++;
+            atualizarPainel();
+
             const pages = document.querySelectorAll('.page-section');
             pages.forEach(page => {
                 page.classList.remove('active');
@@ -519,6 +789,7 @@
             });
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            currentPage = pageId;
         }
 
         function toggleMobileMenu() {
@@ -531,58 +802,270 @@
         }
         document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
 
-        // ==========================================
-        // MOTOR DO GRÁFICO DO MERCADO FINANCEIRO
-        // ==========================================
+        function calcularRisco() {
+            const slider = document.getElementById('revenueSlider');
+            if(!slider) return;
+            const val = parseInt(slider.value);
+            document.getElementById('faturamento-display').innerText = val.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            const perdaAnual = (val * 12) * 0.08; 
+            document.getElementById('perda-display').innerText = perdaAnual.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+        }
+
+        // -------------------------
+        // ADMIN LEADS
+        // -------------------------
+        let leadsBase = [];
+        let simulatedVisits = 142;
+
+        function capturarLead(e) {
+            e.preventDefault();
+            const nome = document.getElementById('leadName').value;
+            const telefone = document.getElementById('leadPhone').value;
+            const novoLead = {
+                id: Date.now(),
+                data: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
+                nome: nome,
+                telefone: telefone
+            };
+            leadsBase.push(novoLead);
+            atualizarPainel();
+            document.getElementById('leadForm').style.display = 'none';
+            document.getElementById('leadSuccess').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('leadForm').reset();
+                document.getElementById('leadForm').style.display = 'block';
+                document.getElementById('leadSuccess').classList.add('hidden');
+            }, 5000);
+        }
+
+        function atualizarPainel() {
+            if(document.getElementById('counter-visits')) document.getElementById('counter-visits').innerText = simulatedVisits;
+            if(document.getElementById('counter-leads')) document.getElementById('counter-leads').innerText = leadsBase.length;
+
+            const tbody = document.getElementById('leadsTableBody');
+            if(tbody && leadsBase.length > 0) {
+                if(document.getElementById('emptyState')) document.getElementById('emptyState').style.display = 'none';
+                tbody.innerHTML = '';
+                [...leadsBase].reverse().forEach(lead => {
+                    const tr = document.createElement('tr');
+                    tr.className = "border-t border-gray-800/50 hover:bg-[#D4AF37]/5 transition-colors";
+                    tr.innerHTML = `
+                        <td class="p-4 font-mono text-xs text-gray-500">${lead.data}</td>
+                        <td class="p-4 text-white font-medium">${lead.nome}</td>
+                        <td class="p-4 font-mono text-[#D4AF37]">${lead.telefone}</td>
+                        <td class="p-4">
+                            <a href="https://wa.me/55${lead.telefone.replace(/\D/g,'')}?text=Ol%C3%A1%20${encodeURIComponent(lead.nome)},%20vi%20o%20seu%20interesse%20em%20estrat%C3%A9gia%20fiscal." target="_blank" class="text-green-500 hover:text-green-400 font-mono text-[10px] uppercase border border-green-500/30 px-2 py-1 rounded">
+                                Contatar
+                            </a>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        function abrirLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function validarAcesso() {
+            const pin = document.getElementById('adminPin').value;
+            if(pin === 'amx2026') {
+                document.getElementById('loginModal').classList.add('hidden');
+                document.getElementById('adminPin').value = '';
+                document.getElementById('loginError').classList.add('hidden');
+                navigateTo('admin');
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        function sairPainel() {
+            navigateTo('home');
+        }
+
+        // -------------------------
+        // INTEGRAÇÃO DE APIs (DADOS REAIS)
+        // -------------------------
+        
+        let apiNewsList = [];
+        let newsDisplayIndex = 0;
+        const feedContainer = document.getElementById('live-news-feed');
+        const loadingElement = document.getElementById('loading-feed');
+
+        // Buscar Cotação Real (AwesomeAPI)
+        async function fetchMarketData() {
+            try {
+                const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL');
+                const data = await response.json();
+                
+                if (data.USDBRL) {
+                    const usdValue = parseFloat(data.USDBRL.bid).toFixed(2).replace('.', ',');
+                    const usdPct = parseFloat(data.USDBRL.pctChange);
+                    document.getElementById('metric-usd').innerText = `R$ ${usdValue}`;
+                    const barUsd = document.getElementById('bar-usd');
+                    barUsd.className = `h-full w-[${50 + usdPct}%] transition-all duration-1000 ${usdPct < 0 ? 'bg-red-500' : 'bg-green-500'}`;
+                }
+                
+                if (data.EURBRL) {
+                    const eurValue = parseFloat(data.EURBRL.bid).toFixed(2).replace('.', ',');
+                    const eurPct = parseFloat(data.EURBRL.pctChange);
+                    document.getElementById('metric-eur').innerText = `R$ ${eurValue}`;
+                    const barEur = document.getElementById('bar-eur');
+                    barEur.className = `h-full w-[${60 + eurPct}%] transition-all duration-1000 ${eurPct < 0 ? 'bg-red-500' : 'bg-blue-500'}`;
+                }
+            } catch (e) {
+                console.log("Erro ao buscar câmbio, mantendo fallback.");
+            }
+        }
+
+        // Buscar Notícias Reais (G1 Economia via RSS2JSON)
+        async function fetchRealNews() {
+            try {
+                // RSS2JSON API converte o feed RSS do G1 Economia para JSON utilizável no navegador
+                const rssUrl = 'https://g1.globo.com/rss/g1/economia/';
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+                const data = await response.json();
+                
+                if(data.status === 'ok' && data.items.length > 0) {
+                    apiNewsList = data.items;
+                    if(loadingElement) loadingElement.style.display = 'none';
+                    
+                    // Mostra as 3 primeiras logo que carrega
+                    for(let i = 0; i < 3; i++) {
+                        injectNextNews(false);
+                    }
+                    
+                    // Inicia o ciclo de injeção para as restantes
+                    iniciarFeedContinuoReal();
+                } else {
+                    throw new Error("Formato de API não reconhecido");
+                }
+            } catch (e) {
+                console.log("Erro ao buscar notícias da API.", e);
+                if(loadingElement) loadingElement.innerHTML = `<p class="text-red-400 font-mono text-xs">Erro de conexão. Tente novamente mais tarde.</p>`;
+            }
+        }
+
+        function getCategoryStyle(title) {
+            // Lógica simples para categorizar visualmente a notícia real com base no título
+            const lowerTitle = title.toLowerCase();
+            if(lowerTitle.includes('imposto') || lowerTitle.includes('receita')) return { tag: 'FISCAL', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' };
+            if(lowerTitle.includes('alta') || lowerTitle.includes('lucro') || lowerTitle.includes('cresce')) return { tag: 'MERCADO', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/30' };
+            if(lowerTitle.includes('dólar') || lowerTitle.includes('euro')) return { tag: 'CÂMBIO', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' };
+            return { tag: 'NOTÍCIA', color: 'text-[#D4AF37]', bg: 'bg-[#D4AF37]/10', border: 'border-[#D4AF37]/30' };
+        }
+
+        function renderizarNoticiaReal(newsData, isNew = false) {
+            const div = document.createElement('div');
+            div.className = `p-4 rounded border border-gray-800 bg-[#0a0a0c] hover:border-[#D4AF37]/40 transition-all ${isNew ? 'animate-[pulse_1s_ease-in-out]' : ''}`;
+            
+            const category = getCategoryStyle(newsData.title);
+            
+            // Converte data de 'YYYY-MM-DD HH:MM:SS' para formato legível
+            const pubDate = new Date(newsData.pubDate);
+            const timeString = pubDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+
+            div.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <span class="${category.color} ${category.bg} ${category.border} font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 rounded border">
+                        ${category.tag}
+                    </span>
+                    <span class="text-gray-600 font-mono text-[10px]">Hoje, ${timeString}</span>
+                </div>
+                <p class="text-gray-300 font-light text-sm leading-relaxed">${newsData.title}</p>
+                <div class="mt-3 flex items-center justify-between cursor-pointer group" onclick="window.open('${newsData.link}', '_blank')">
+                    <span class="text-[#D4AF37] font-mono text-[10px] uppercase tracking-widest group-hover:underline">Ler no Portal G1</span>
+                    <i data-lucide="external-link" class="w-3 h-3 text-[#D4AF37] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                </div>
+            `;
+            return div;
+        }
+
+        function injectNextNews(animate = true) {
+            if(!feedContainer || apiNewsList.length === 0) return;
+            
+            // Pega a próxima notícia ou recomeça o ciclo se acabar
+            const newsData = apiNewsList[newsDisplayIndex % apiNewsList.length];
+            newsDisplayIndex++;
+
+            const novoItem = renderizarNoticiaReal(newsData, animate);
+            
+            if(animate) {
+                novoItem.style.opacity = '0';
+                novoItem.style.transform = 'translateY(-20px)';
+                feedContainer.insertBefore(novoItem, feedContainer.firstChild);
+                lucide.createIcons();
+                void novoItem.offsetWidth;
+                novoItem.style.opacity = '1';
+                novoItem.style.transform = 'translateY(0)';
+            } else {
+                feedContainer.appendChild(novoItem);
+                lucide.createIcons();
+            }
+
+            // Limita a 10 itens na tela para não pesar a página
+            if(feedContainer.children.length > 10 && feedContainer.lastChild !== loadingElement) {
+                feedContainer.removeChild(feedContainer.lastChild);
+            }
+
+            const dataAtual = new Date();
+            document.getElementById('last-update-time').innerHTML = `<span class="text-green-500 font-bold">●</span> ONLINE: ${dataAtual.toLocaleTimeString('pt-BR')}`;
+        }
+
+        function iniciarFeedContinuoReal() {
+            // A cada 12 segundos injeta uma nova notícia da pool puxada da API
+            setInterval(() => {
+                if(currentPage === 'insights') {
+                    injectNextNews(true);
+                }
+            }, 12000);
+        }
+
+        // -------------------------
+        // GRÁFICOS DE FUNDO (CANDLESTICKS)
+        // -------------------------
         const chartContainer = document.getElementById('live-chart-container');
         let candlesticks = [];
-        const numCandles = Math.floor(window.innerWidth / 35);
-
+        let numCandles = 20;
         const COLOR_UP = 'var(--trade-green)';
         const COLOR_DOWN = 'var(--trade-red)';
 
         function createLiveChart() {
             if(!chartContainer) return;
+            numCandles = Math.floor(window.innerWidth / 35);
             chartContainer.innerHTML = '';
             candlesticks = [];
-
             for(let i = 0; i < numCandles; i++) {
                 const candleWrapper = document.createElement('div');
                 candleWrapper.className = 'relative w-2 sm:w-3 md:w-4 flex justify-center h-full mx-1';
-                
                 const wick = document.createElement('div');
                 wick.className = 'absolute w-px bg-white/40 candle-wick';
-                
                 const body = document.createElement('div');
                 body.className = 'absolute w-full rounded-sm candle-body shadow-lg';
-
                 candleWrapper.appendChild(wick);
                 candleWrapper.appendChild(body);
                 chartContainer.appendChild(candleWrapper);
-
                 const isGreen = Math.random() > 0.4;
                 candlesticks.push({ wrapper: candleWrapper, wick, body, isGreen });
-                
                 updateCandle(candlesticks[i], i);
             }
         }
 
         function updateCandle(candle, index) {
+            if(!candle) return;
             const height = Math.floor(Math.random() * 40) + 10;
             const bottom = Math.floor(Math.random() * 40) + 10;
             const wickHeight = height + Math.floor(Math.random() * 30) + 10;
             const wickBottom = bottom - Math.floor(Math.random() * 10);
-
             if (Math.random() > 0.8) candle.isGreen = !candle.isGreen;
-            
             const color = candle.isGreen ? COLOR_UP : COLOR_DOWN;
             const shadow = candle.isGreen ? '0 0 10px rgba(34,197,94,0.4)' : '0 0 10px rgba(239,68,68,0.4)';
-
             candle.body.style.height = `${height}%`;
             candle.body.style.bottom = `${bottom}%`;
             candle.body.style.backgroundColor = color;
             candle.body.style.boxShadow = shadow;
-
             candle.wick.style.height = `${wickHeight}%`;
             candle.wick.style.bottom = `${wickBottom}%`;
             candle.wick.style.backgroundColor = color;
@@ -591,6 +1074,7 @@
         function startMarketSimulation() {
             createLiveChart();
             setInterval(() => {
+                if(currentPage !== 'home') return; 
                 const numToUpdate = Math.floor(numCandles / 3);
                 for(let i = 0; i < numToUpdate; i++) {
                     const randomIndex = Math.floor(Math.random() * numCandles);
@@ -601,9 +1085,6 @@
             }, 600);
         }
 
-        // ==========================================
-        // ROTATIVIDADE DE REGIMES TRIBUTÁRIOS (TICKER)
-        // ==========================================
         const regimesTributarios = [
             { name: "SIMPLES NAC.", saving: "-15% CUSTO", color: "text-green-500", icon: "arrow-down-right" },
             { name: "LUCRO PRESUM.", saving: "-22% CUSTO", color: "text-green-500", icon: "arrow-down-right" },
@@ -614,12 +1095,12 @@
         let currentRegime = 0;
 
         function startRegimeTicker() {
-            const nameEl = document.getElementById('regime-name');
-            const savingEl = document.getElementById('regime-saving');
-
-            if(!nameEl || !savingEl) return;
-
             setInterval(() => {
+                if(currentPage !== 'home') return;
+                const nameEl = document.getElementById('regime-name');
+                const savingEl = document.getElementById('regime-saving');
+                if(!nameEl || !savingEl) return;
+
                 nameEl.style.opacity = '0';
                 nameEl.style.transform = 'translateY(-10px)';
                 savingEl.style.opacity = '0';
@@ -628,44 +1109,49 @@
                 setTimeout(() => {
                     currentRegime = (currentRegime + 1) % regimesTributarios.length;
                     const regime = regimesTributarios[currentRegime];
-
                     nameEl.textContent = regime.name;
                     savingEl.className = `${regime.color} text-xs font-mono mb-1 flex items-center`;
                     savingEl.innerHTML = `<i data-lucide="${regime.icon}" class="w-3 h-3 mr-1"></i> ${regime.saving}`;
-                    
                     lucide.createIcons();
 
                     nameEl.style.transition = 'none';
                     nameEl.style.transform = 'translateY(10px)';
                     savingEl.style.transition = 'none';
                     savingEl.style.transform = 'translateY(10px)';
-
-                    void nameEl.offsetWidth; // Reflow
+                    void nameEl.offsetWidth; 
 
                     nameEl.style.transition = 'all 0.3s ease';
                     nameEl.style.opacity = '1';
                     nameEl.style.transform = 'translateY(0)';
-                    
                     savingEl.style.transition = 'all 0.3s ease';
                     savingEl.style.opacity = '1';
                     savingEl.style.transform = 'translateY(0)';
-                    
                 }, 300);
             }, 3000);
         }
 
-        // Inicialização
+        // ==========================
+        // INICIALIZAÇÃO GLOBAL
+        // ==========================
         document.addEventListener('DOMContentLoaded', () => {
             navigateTo('home');
             startMarketSimulation();
             startRegimeTicker();
+            atualizarPainel();
+            calcularRisco();
+            
+            // APIs Reais
+            fetchMarketData(); // Cotação Câmbio Real
+            fetchRealNews();   // G1 Economia (Real)
+            
+            // Atualiza o câmbio a cada 1 minuto (se manter o site aberto)
+            setInterval(fetchMarketData, 60000);
         });
 
-        // Recalcular no redimensionamento da janela
         window.addEventListener('resize', () => {
             clearTimeout(window.resizeTimer);
             window.resizeTimer = setTimeout(() => {
-                startMarketSimulation();
+                if(currentPage === 'home') createLiveChart();
             }, 250);
         });
     </script>
