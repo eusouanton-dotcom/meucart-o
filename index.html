@@ -24,6 +24,7 @@
             color: #e2e8f0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; letter-spacing: -0.02em; }
@@ -52,7 +53,7 @@
             border-right: 0.15em solid #D4AF37;
             white-space: nowrap;
             margin: 0 auto;
-            animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+            animation: typing 1.5s steps(40, end), blink-caret 0.75s step-end infinite;
         }
         .boot-logs {
             margin-top: 20px;
@@ -61,7 +62,7 @@
             font-size: 10px;
             text-transform: uppercase;
             opacity: 0;
-            animation: fadeInLog 0.5s forwards 1.5s;
+            animation: fadeInLog 0.5s forwards 1s;
         }
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #D4AF37; } }
@@ -91,7 +92,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* Efeito de Rastreamento do Mouse */
         .glass-panel::before {
             content: "";
             position: absolute;
@@ -102,10 +102,7 @@
             transition: opacity 0.5s ease;
             pointer-events: none;
         }
-        .glass-panel:hover::before {
-            opacity: 1;
-        }
-        /* Garantir que o conteúdo fique acima do brilho */
+        .glass-panel:hover::before { opacity: 1; }
         .glass-panel > * { position: relative; z-index: 1; }
 
         /* Ticker e Grid */
@@ -119,7 +116,6 @@
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
         }
 
-        .candle-body, .candle-wick { transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .page-section { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
         .page-section.active { display: block; opacity: 1; transform: translateY(0); }
 
@@ -131,9 +127,8 @@
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #D4AF37; cursor: pointer; margin-top: -10px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); border: 2px solid #fff; transition: transform 0.1s; }
         input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.1); }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 2px; }
-        select.default-select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1em; }
+        select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D4AF37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1em; }
         
-        /* Ajuste fino do FOMO Popup */
         #fomo-popup {
             position: fixed;
             bottom: 24px;
@@ -149,16 +144,8 @@
             opacity: 1;
         }
 
-        /* Estilo Select da Tabela de Honorários */
-        .select-status {
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            background: transparent; border: 1px solid rgba(255,255,255,0.1);
-            color: #9ca3af; text-align: center; text-align-last: center;
-            outline: none; transition: all 0.3s ease;
-        }
-        .select-status:focus { border-color: #D4AF37; }
-        .select-status.is-pago { color: #22c55e; border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.1); }
-        .select-status.is-pendente { color: #eab308; border-color: rgba(234,179,8,0.3); background: rgba(234,179,8,0.1); }
+        /* Utilidades */
+        .blur-locked { filter: blur(8px); pointer-events: none; user-select: none; transition: filter 0.5s ease; }
     </style>
 </head>
 <body class="antialiased selection:bg-[#D4AF37] selection:text-black">
@@ -254,7 +241,7 @@
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-gold/20 absolute w-full left-0 top-20 flex flex-col items-center py-6 space-y-6 shadow-2xl">
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-[#D4AF37]/20 absolute w-full left-0 top-20 flex flex-col items-center py-6 space-y-6 shadow-2xl">
             <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Home</button>
             <button onclick="navigateTo('historia'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">História</button>
             <button onclick="navigateTo('estrategia'); toggleMobileMenu()" class="text-white hover:text-[#D4AF37] font-medium text-lg">Estratégia e Estrutura</button>
@@ -267,7 +254,6 @@
     <section id="page-home" class="page-section active relative w-full min-h-screen overflow-hidden bg-[#020202] pt-32 pb-24 flex items-center">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 trading-grid opacity-60"></div>
-            <div id="live-chart-container" class="absolute inset-x-0 bottom-0 h-[70%] flex items-end justify-around px-2 pb-10 opacity-30 pointer-events-none"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-[#050506] via-[#050506]/90 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-[#050506] via-transparent to-transparent"></div>
         </div>
@@ -275,7 +261,6 @@
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="grid lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-7 space-y-8">
-                    
                     <div class="inline-flex items-center gap-3 px-3 py-1.5 rounded bg-black/50 border border-red-500/30 backdrop-blur-md shadow-[0_0_15px_rgba(239,68,68,0.15)]">
                         <div class="relative flex h-2.5 w-2.5">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -320,8 +305,8 @@
                                     <span class="text-green-400">OTIMIZADO</span>
                                 </div>
                                 <div class="flex items-end gap-3 overflow-hidden h-12 py-1">
-                                    <span id="regime-name" class="text-3xl font-bold text-white font-mono" style="transition: all 0.3s ease;">SIMPLES NAC.</span>
-                                    <span id="regime-saving" class="text-green-500 text-xs font-mono mb-1 flex items-center" style="transition: all 0.3s ease;">
+                                    <span id="regime-name" class="text-3xl font-bold text-white font-mono">SIMPLES NAC.</span>
+                                    <span id="regime-saving" class="text-green-500 text-xs font-mono mb-1 flex items-center">
                                         <i data-lucide="arrow-down-right" class="w-3 h-3 mr-1"></i> -15% CUSTO
                                     </span>
                                 </div>
@@ -337,7 +322,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-black/40 p-3 rounded border border-gray-800">
                                     <p class="text-[10px] text-gray-500 font-mono uppercase">Proteção de Capital</p>
-                                    <p class="text-white font-mono text-lg mt-1" id="live-protection">100%</p>
+                                    <p class="text-white font-mono text-lg mt-1">100%</p>
                                 </div>
                                 <div class="bg-[#D4AF37]/5 p-3 rounded border border-[#D4AF37]/30">
                                     <p class="text-[10px] text-[#D4AF37] font-mono uppercase">RoI Contábil</p>
@@ -367,7 +352,7 @@
                         Foi essa ineficiência do mercado que moldou a minha operação. Uma empresa com números no escuro é como um trader a operar de olhos vendados. O resultado? <strong class="text-[#D4AF37] font-medium">Sangria financeira silenciosa.</strong>
                     </p>
                     <p>
-                        Em parceria com a <strong class="text-white font-medium border-b border-gray-600">Adriana Souza Contabilidade Ltda</strong>, o nosso método une rigor técnico a uma visão de investimentos. Nós não nos limitamos a processar folha de pagamento; nós mapeamos o risco, calibramos o regime tributário e blindamos o seu patrimônio como quem gere um fundo de alto risco.
+                        Em parceria com a <strong class="text-white font-medium border-b border-gray-600">Adriana Souza Contabilidade Ltda</strong>, o nosso método une rigor técnico a uma visão de investimentos. Nós não nos limitamos a processar folha de pagamento; nós mapeamos o risco, calibramos o regime tributário e blindamos o seu patrimônio.
                     </p>
                     
                     <div class="glass-panel p-6 rounded-sm border-l-4 border-l-[#D4AF37] mt-8 bg-black/40 relative">
@@ -379,11 +364,7 @@
                 
                 <div class="order-1 md:order-2 relative">
                     <div class="aspect-[4/5] rounded-sm overflow-hidden glass-panel relative group border border-gray-800 bg-[#0a0a0c]">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-20">
-                            <i data-lucide="shield-check" class="w-24 h-24 text-[#D4AF37] mb-4"></i>
-                            <span class="font-mono text-[#D4AF37] text-xs uppercase tracking-widest">Proteção Ativa</span>
-                        </div>
-                        <img src="minha-foto1.jpg" alt="Antônio Marcos" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-10">
+                        <img src="minha-foto.jpeg" alt="Antônio Marcos" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 z-10">
                         <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/90 to-transparent z-30 border-t border-[#D4AF37]/20">
                             <div class="flex justify-between items-end">
                                 <div>
@@ -405,88 +386,57 @@
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Estratégia & Estrutura</h2>
                 <div class="h-1 w-24 bg-gradient-gold mx-auto rounded-full mb-8"></div>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Não entregamos apenas guias de impostos. Construímos um ecossistema financeiro à prova de balas para a sua empresa lucrar mais todos os meses.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Não entregamos apenas guias de impostos. Construímos um ecossistema financeiro à prova de balas.</p>
             </div>
 
             <div class="grid lg:grid-cols-12 gap-10 mb-20">
                 <div class="lg:col-span-7 space-y-4">
                     <h3 class="text-[#D4AF37] font-mono text-sm uppercase tracking-widest mb-6">Metodologia de Atuação</h3>
                     
-                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506] transition-all">
+                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506]">
                         <div class="flex items-start gap-4">
-                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
-                                <i data-lucide="crosshair" class="w-6 h-6"></i>
-                            </div>
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37]"><i data-lucide="crosshair" class="w-6 h-6"></i></div>
                             <div class="flex-1">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Revisão Tributária</h4>
-                                    <span class="text-green-500 font-mono text-[10px] bg-green-500/10 px-2 py-1 rounded border border-green-500/30">Análise Real</span>
-                                </div>
-                                <p class="text-sm text-gray-400 leading-relaxed font-light">Auditoria profunda para estancar vazamentos financeiros. Mapeamos o enquadramento perfeito para que pague estritamente o mínimo imposto exigido por lei.</p>
+                                <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono mb-2">Revisão Tributária</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Auditoria profunda para estancar vazamentos financeiros e mapear o enquadramento perfeito.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506] transition-all">
+                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506]">
                         <div class="flex items-start gap-4">
-                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
-                                <i data-lucide="pie-chart" class="w-6 h-6"></i>
-                            </div>
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37]"><i data-lucide="pie-chart" class="w-6 h-6"></i></div>
                             <div class="flex-1">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Inteligência de Dados</h4>
-                                    <span class="text-[#D4AF37] font-mono text-[10px] bg-[#D4AF37]/10 px-2 py-1 rounded border border-[#D4AF37]/30">Decisão Clara</span>
-                                </div>
-                                <p class="text-sm text-gray-400 leading-relaxed font-light">Raio-X financeiro do seu negócio. Transformamos números abstratos em painéis de controle visuais para que saiba exatamente qual é a sua margem de lucro real.</p>
+                                <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono mb-2">Inteligência de Dados</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Transformamos números abstratos em painéis de controle visuais (Margem de Lucro Real).</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506] transition-all">
+                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506]">
                         <div class="flex items-start gap-4">
-                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
-                                <i data-lucide="shield" class="w-6 h-6"></i>
-                            </div>
+                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37]"><i data-lucide="shield" class="w-6 h-6"></i></div>
                             <div class="flex-1">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Blindagem e Conformidade</h4>
-                                    <span class="text-blue-400 font-mono text-[10px] bg-blue-500/10 px-2 py-1 rounded border border-blue-500/30">Risco Zero</span>
-                                </div>
-                                <p class="text-sm text-gray-400 leading-relaxed font-light">Dados processados com precisão cirúrgica. Garantimos 100% de conformidade, evitando passivos, multas e blindando a sua operação contra fiscalizações.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-panel p-6 rounded-sm group border border-gray-800 bg-[#050506] transition-all">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 bg-[#D4AF37]/10 rounded text-[#D4AF37] group-hover:scale-110 transition-transform">
-                                <i data-lucide="users" class="w-6 h-6"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono">Gestão de Passivos Laborais</h4>
-                                    <span class="text-purple-400 font-mono text-[10px] bg-purple-500/10 px-2 py-1 rounded border border-purple-500/30">RH Seguro</span>
-                                </div>
-                                <p class="text-sm text-gray-400 leading-relaxed font-light">Administração segura das rotinas de RH. Mitigamos dores de cabeça com cálculos exatos de holerites, férias, rescisões e proteção contra processos trabalhistas.</p>
+                                <h4 class="text-lg font-bold text-white uppercase tracking-wider font-mono mb-2">Blindagem e Conformidade</h4>
+                                <p class="text-sm text-gray-400 leading-relaxed font-light">Evitamos passivos trabalhistas, multas e blindamos a sua operação contra fiscalizações.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-5">
-                    <div class="glass-panel p-8 rounded-sm border-t-4 border-t-red-500 bg-[#0a0a0c] sticky top-28 shadow-[0_20px_50px_rgba(239,68,68,0.1)]">
+                    <div class="glass-panel p-8 rounded-sm border-t-4 border-t-red-500 bg-[#0a0a0c] shadow-[0_20px_50px_rgba(239,68,68,0.1)]">
                         <div class="flex items-center gap-2 mb-4">
                             <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
                             <span class="text-red-400 font-mono text-xs tracking-widest uppercase font-bold">Diagnóstico Tributário Real</span>
                         </div>
                         <h3 class="text-2xl font-bold text-white font-serif mb-2">Quanto dinheiro está na mesa?</h3>
-                        <p class="text-gray-400 text-sm font-light mb-8 leading-relaxed">Cálculo embasado nas <strong class="text-white">taxas efetivas médias reais</strong> da legislação tributária brasileira. Preencha o perfil da sua operação:</p>
                         
-                        <div class="space-y-6">
+                        <div class="space-y-6 mt-6">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-500 font-mono text-[10px] uppercase mb-1 tracking-widest">Setor</label>
-                                    <select id="calc-setor" onchange="calcularRisco()" class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white font-mono text-xs focus:border-[#D4AF37] outline-none default-select">
+                                    <select id="calc-setor" onchange="calcularRisco()" class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white font-mono text-xs focus:border-[#D4AF37] outline-none">
                                         <option value="servicos">Serviços</option>
                                         <option value="comercio">Comércio</option>
                                         <option value="industria">Indústria</option>
@@ -494,7 +444,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-gray-500 font-mono text-[10px] uppercase mb-1 tracking-widest">Regime Atual</label>
-                                    <select id="calc-regime" onchange="calcularRisco()" class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white font-mono text-xs focus:border-[#D4AF37] outline-none default-select">
+                                    <select id="calc-regime" onchange="calcularRisco()" class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white font-mono text-xs focus:border-[#D4AF37] outline-none">
                                         <option value="simples">Simples Nacional</option>
                                         <option value="presumido" selected>Lucro Presumido</option>
                                         <option value="real">Lucro Real</option>
@@ -508,47 +458,24 @@
                                     <span id="faturamento-display" class="text-white font-bold text-sm">R$ 100.000,00</span>
                                 </div>
                                 <input type="range" id="revenueSlider" min="30000" max="2000000" step="10000" value="100000" oninput="calcularRisco()">
-                                <div class="flex justify-between text-gray-600 font-mono text-[10px] mt-2">
-                                    <span>R$ 30 Mil</span>
-                                    <span>R$ 2 Milhões+</span>
-                                </div>
                             </div>
 
-                            <div class="bg-red-500/10 border border-red-500/20 p-5 rounded-sm relative overflow-hidden mt-4 shadow-inner">
-                                <div class="flex justify-between items-center mb-4">
-                                    <p class="text-white font-mono text-[10px] uppercase tracking-widest">Visualização da Sangria</p>
+                            <div class="bg-black/50 border border-gray-800 p-5 rounded-sm text-center relative mt-4 shadow-inner">
+                                <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-2">Sangria Anual Estimada</p>
+                                
+                                <div id="perda-blur-container" class="relative py-2">
+                                    <p id="perda-display-blur" class="text-3xl font-bold text-white font-mono blur-locked">R$ ***.***</p>
+                                    <button id="btn-unlock" onclick="abrirGateModal()" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#D4AF37] text-black px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded hover:bg-white transition-colors flex items-center gap-2 whitespace-nowrap shadow-lg">
+                                        <i data-lucide="lock" class="w-3 h-3"></i> Revelar Impacto
+                                    </button>
                                 </div>
                                 
-                                <div class="space-y-4">
-                                    <div>
-                                        <div class="flex justify-between text-[10px] font-mono text-gray-400 mb-1 uppercase">
-                                            <span>Carga Tributária Atual</span>
-                                            <span id="taxa-atual-display" class="text-red-400 font-bold">16.3%</span>
-                                        </div>
-                                        <div class="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden">
-                                            <div id="bar-atual-chart" class="h-full bg-red-500 w-[16.3%] transition-all duration-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between text-[10px] font-mono text-gray-400 mb-1 uppercase">
-                                            <span>Carga Otimizada (Alvo AMX)</span>
-                                            <span id="taxa-alvo-display" class="text-[#D4AF37] font-bold">13.8%</span>
-                                        </div>
-                                        <div class="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden">
-                                            <div id="bar-alvo-chart" class="h-full bg-[#D4AF37] w-[13.8%] transition-all duration-500 shadow-[0_0_10px_rgba(212,175,55,0.5)]"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mt-6 pt-4 border-t border-gray-800 text-center">
-                                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Perda Anual Estimada</p>
-                                    <p id="perda-display" class="text-3xl font-bold text-white font-mono tracking-tighter text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)] transition-all">R$ 0,00</p>
-                                </div>
+                                <p id="perda-display-real" class="hidden text-3xl font-bold text-red-500 font-mono tracking-tighter drop-shadow-[0_0_10px_rgba(239,68,68,0.5)] py-2"></p>
                             </div>
 
-                            <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Fiz%20o%20teste%20no%20diagn%C3%B3stico%20tribut%C3%A1rio%20e%20gostaria%20de%20agendar%20uma%20reuni%C3%A3o%20para%20avaliar%20este%20cen%C3%A1rio." target="_blank" class="w-full bg-gradient-gold text-black font-bold font-mono uppercase tracking-widest py-4 rounded shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-white transition-colors text-sm flex items-center justify-center gap-2 group mt-2">
-                                <i data-lucide="shield-check" class="w-5 h-5 group-hover:scale-110 transition-transform"></i> Estancar Sangria Agora
-                            </a>
+                            <button id="btn-whatsapp-direto" onclick="redirecionarWhats()" class="hidden w-full bg-white text-black font-bold font-mono uppercase tracking-widest py-3 rounded-sm hover:bg-[#D4AF37] transition-colors text-xs flex items-center justify-center gap-2">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i> Falar com Especialista
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -562,33 +489,23 @@
                             <span class="text-green-500 font-mono text-xs tracking-widest uppercase">Agenda Aberta</span>
                         </div>
                         <h2 class="text-3xl font-bold text-white font-serif mb-4">Inicie a otimização hoje.</h2>
-                        <p class="text-gray-400 mb-8 font-light">Agende uma reunião direta comigo ou visite o nosso quartel-general no centro de Belo Horizonte para um diagnóstico estrutural.</p>
+                        <p class="text-gray-400 mb-8 font-light">Agende uma reunião direta comigo ou visite o nosso quartel-general no centro de Belo Horizonte.</p>
 
                         <div class="space-y-6 mb-10">
                             <div class="flex items-start gap-4">
                                 <div class="bg-[#D4AF37]/10 p-3 rounded-sm border border-[#D4AF37]/20"><i data-lucide="map-pin" class="w-5 h-5 text-[#D4AF37]"></i></div>
                                 <div>
                                     <h4 class="text-white font-mono uppercase tracking-wider text-sm mb-1">Central de Operações</h4>
-                                    <p class="text-gray-400 text-sm font-light">Rua São Paulo, nº 409 - Andar 17, Sala 1707<br>Edifício Avenida (Esq. Av. Afonso Pena)<br>Belo Horizonte - MG</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="bg-[#D4AF37]/10 p-3 rounded-sm border border-[#D4AF37]/20"><i data-lucide="mail" class="w-5 h-5 text-[#D4AF37]"></i></div>
-                                <div>
-                                    <h4 class="text-white font-mono uppercase tracking-wider text-sm mb-1">Canal Direto</h4>
-                                    <a href="mailto:eusouanton@gmail.com" class="text-gray-400 text-sm font-light hover:text-[#D4AF37] transition-colors">eusouanton@gmail.com</a>
+                                    <p class="text-gray-400 text-sm font-light">Rua São Paulo, nº 409 - Andar 17<br>Edifício Avenida (Esq. Av. Afonso Pena)<br>Belo Horizonte - MG</p>
                                 </div>
                             </div>
                         </div>
-                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Gostaria%20de%20agendar%20uma%20reuni%C3%A3o%20para%20revis%C3%A3o%20cont%C3%A1bil." target="_blank" class="bg-transparent border border-[#D4AF37] text-[#D4AF37] font-bold text-center flex items-center justify-center gap-3 hover:bg-[#D4AF37] hover:text-black transition-colors w-full sm:w-auto self-start uppercase font-mono tracking-wider px-8 py-4 rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.1)]">
-                            <i data-lucide="calendar" class="w-5 h-5"></i> Agendar Consultoria Presencial
+                        <a href="https://wa.me/5531971743868" target="_blank" class="bg-transparent border border-[#D4AF37] text-[#D4AF37] font-bold text-center flex items-center justify-center gap-3 hover:bg-[#D4AF37] hover:text-black transition-colors w-full sm:w-auto self-start uppercase font-mono tracking-wider px-8 py-4 rounded-sm">
+                            <i data-lucide="calendar" class="w-5 h-5"></i> Agendar Consultoria
                         </a>
                     </div>
                     <div class="h-80 lg:h-auto min-h-[400px] w-full relative border-l border-gray-800">
-                        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Condominio+do+Edificio+Avenida+Rua+Sao+Paulo+409+Belo+Horizonte&t=m&z=17&output=embed&iwloc=near&color=%23000000" style="filter: invert(90%) hue-rotate(180deg) contrast(110%) brightness(110%);" class="absolute inset-0"></iframe>
-                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-sm border border-[#D4AF37]/30 text-[10px] text-[#D4AF37] flex items-center gap-2 font-mono uppercase tracking-widest shadow-lg">
-                            <span class="w-1.5 h-1.5 bg-[#D4AF37] rounded-full animate-ping"></span> Target Location
-                        </div>
+                        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=pt&amp;q=Belo%20Horizonte+(Ant%C3%B4nio%20Marcos)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" style="filter: invert(90%) hue-rotate(180deg) contrast(110%) brightness(110%);" class="absolute inset-0"></iframe>
                     </div>
                 </div>
             </div>
@@ -597,15 +514,13 @@
 
     <section id="page-insights" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#050506]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-            
             <div class="text-center mb-12">
                 <h2 class="text-4xl md:text-5xl font-bold text-white font-serif mb-4">Radar Financeiro Local</h2>
                 <div class="h-1 w-24 bg-gradient-gold mx-auto rounded-full mb-8"></div>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Dados econômicos e notícias de negócios do Brasil importados em tempo real diretamente das principais fontes abertas do mercado.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">Dados econômicos e notícias de negócios importados em tempo real.</p>
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8">
-                
                 <div class="lg:col-span-2 glass-panel p-6 rounded-sm border-t-2 border-t-[#D4AF37] flex flex-col h-[650px]">
                     <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-4 flex-wrap gap-2">
                         <div class="flex items-center gap-3">
@@ -617,94 +532,24 @@
                                 <span class="text-green-400 font-mono text-[9px] uppercase tracking-widest font-bold">API Ativa</span>
                             </div>
                         </div>
-                        <span class="text-green-500 font-mono text-[10px] uppercase flex items-center gap-1" id="last-update-time">
-                            <i data-lucide="refresh-ccw" class="w-3 h-3"></i> Sincronizando...
-                        </span>
                     </div>
-                    
-                    <div id="live-news-feed" class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
-                        <div id="loading-feed" class="flex flex-col items-center justify-center h-full opacity-50">
-                            <i data-lucide="loader" class="w-8 h-8 text-[#D4AF37] animate-spin mb-4"></i>
-                            <p class="text-gray-400 font-mono text-xs tracking-widest uppercase">Estabelecendo conexão segura com InfoMoney...</p>
-                        </div>
+                    <div id="container-noticias" class="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <div id="loading-noticias" class="text-center text-gray-500 font-mono text-[10px] mt-10 uppercase">Estabelecendo Conexão...</div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-1 space-y-6">
-                    
                     <div class="glass-panel p-6 rounded-sm border border-gray-800">
                         <h4 class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i data-lucide="globe" class="w-3 h-3"></i> Mercado Global & Cripto (Live)
+                            <i data-lucide="globe" class="w-3 h-3"></i> Mercado Global (Live)
                         </h4>
                         <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
-                                    <span>Dólar Comercial (USD)</span>
-                                    <span class="text-white font-bold" id="metric-usd">R$ 0,00</span>
-                                </div>
-                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div id="bar-usd" class="h-full bg-green-500 w-[50%] transition-all duration-1000"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
-                                    <span>Euro (EUR)</span>
-                                    <span class="text-white font-bold" id="metric-eur">R$ 0,00</span>
-                                </div>
-                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div id="bar-eur" class="h-full bg-blue-500 w-[50%] transition-all duration-1000"></div>
-                                </div>
-                            </div>
-                            <div class="w-full h-px bg-gray-800/50 my-2"></div>
-                            <div>
-                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
-                                    <span>Bitcoin (BTC)</span>
-                                    <span class="text-white font-bold" id="metric-btc">R$ 0,00</span>
-                                </div>
-                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div id="bar-btc" class="h-full bg-[#D4AF37] w-[50%] transition-all duration-1000"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-xs text-gray-400 font-mono mb-1">
-                                    <span>Ethereum (ETH)</span>
-                                    <span class="text-white font-bold" id="metric-eth">R$ 0,00</span>
-                                </div>
-                                <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div id="bar-eth" class="h-full bg-purple-500 w-[50%] transition-all duration-1000"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-[9px] text-gray-600 font-mono mt-5 text-center flex items-center justify-center gap-1.5">
-                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_5px_#22c55e]"></span>
-                            Conexão B3 / Binance via API
-                        </p>
-                    </div>
-
-                    <div class="glass-panel p-6 rounded-sm border border-[#D4AF37]/30 bg-[#0a0a0c] relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/5 rounded-full blur-[30px]"></div>
-                        <h3 class="text-lg font-bold text-white font-serif mb-2 relative z-10">Blindagem Antecipada</h3>
-                        <p class="text-gray-400 text-xs font-light mb-6 relative z-10">Receba nossas análises exclusivas baseadas nas movimentações reais do mercado.</p>
-                        
-                        <form id="leadForm" onsubmit="capturarLead(event)" class="space-y-4 relative z-10">
-                            <div>
-                                <input type="text" id="leadName" required class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-all font-light text-xs font-mono" placeholder="NOME DO GESTOR">
-                            </div>
-                            <div>
-                                <input type="tel" id="leadPhone" required class="w-full bg-black border border-gray-800 rounded px-3 py-2 text-white focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] outline-none transition-all font-light text-xs font-mono" placeholder="WHATSAPP (XX) XXXXX-XXXX">
-                            </div>
-                            <button type="submit" class="w-full bg-[#D4AF37] text-black font-bold font-mono uppercase tracking-widest py-2 rounded shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:bg-white transition-colors text-xs">
-                                Ativar Proteção
-                            </button>
-                        </form>
-                        
-                        <div id="leadSuccess" class="hidden mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded text-center relative z-10">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mx-auto mb-1"></i>
-                            <p class="text-green-400 text-[10px] font-mono uppercase">Inscrição confirmada!</p>
+                            <div class="flex justify-between text-xs text-gray-400 font-mono border-b border-gray-800/50 pb-2"><span>Dólar (USD)</span><span class="text-white font-bold" id="val-usd">--</span></div>
+                            <div class="flex justify-between text-xs text-gray-400 font-mono border-b border-gray-800/50 pb-2"><span>Euro (EUR)</span><span class="text-white font-bold" id="val-eur">--</span></div>
+                            <div class="flex justify-between text-xs text-gray-400 font-mono border-b border-gray-800/50 pb-2"><span>Bitcoin (BTC)</span><span class="text-white font-bold" id="val-btc">--</span></div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -723,29 +568,22 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-8 order-2 md:order-1">
                     <div class="space-y-6 text-gray-300 text-lg leading-relaxed font-light">
-                        <p>Sendo muito direto: o meu objetivo não é ser um "mal necessário" na sua empresa no final do mês. É ser o motor financeiro que <strong class="text-white font-medium">impulsiona os seus lucros</strong> e blinda o patrimônio que você suou para construir.</p>
-                        <p>A contabilidade de elite exige que o seu estrategista esteja na mesma trincheira que você, antecipando riscos e encontrando o dinheiro deixado na mesa. Se você chegou até aqui, é porque não quer mais um "emissor de guias". <strong class="text-[#D4AF37] font-medium">Você exige um aliado de alto nível.</strong></p>
-                        <div class="p-6 bg-[#0a0a0c] border border-gray-800 rounded-sm hover:border-[#D4AF37]/40 transition-colors">
+                        <p>Sendo muito direto: o meu objetivo não é ser um "mal necessário" na sua empresa. É ser o motor financeiro que <strong class="text-white font-medium">impulsiona os seus lucros</strong> e blinda o seu patrimônio.</p>
+                        <div class="p-6 bg-[#0a0a0c] border border-gray-800 rounded-sm">
                             <h4 class="text-white font-mono text-sm uppercase tracking-widest mb-3 flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-[#D4AF37]"></i> O Convite</h4>
-                            <p class="text-sm text-gray-400">O próximo nível de faturamento do seu negócio não se constrói sozinho. Temos a infraestrutura técnica e a engenharia tributária prontas para escalar a sua operação com segurança absoluta. O mercado não espera. Só falta o seu sinal verde.</p>
+                            <p class="text-sm text-gray-400">Temos a infraestrutura técnica pronta para escalar a sua operação com segurança. O mercado não espera. Só falta o seu sinal verde.</p>
                         </div>
                     </div>
                     <div class="pt-4 border-t border-gray-800/50">
-                        <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Cheguei%20ao%20final%20do%20seu%20site%20e%20gostaria%20de%20firmar%20uma%20alian%C3%A7a%20estrat%C3%A9gica%20para%20o%20crescimento%20da%20minha%20empresa." target="_blank" class="inline-flex items-center gap-3 bg-gradient-gold text-black font-bold font-mono uppercase tracking-widest px-8 py-4 rounded-sm shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all group">
-                            Iniciar Aliança Agora
-                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        <a href="https://wa.me/5531971743868" target="_blank" class="inline-flex items-center gap-3 bg-gradient-gold text-black font-bold font-mono uppercase tracking-widest px-8 py-4 rounded-sm hover:bg-white transition-all group">
+                            Iniciar Aliança Agora <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <p class="text-[10px] text-gray-500 font-mono mt-3 uppercase tracking-widest">Acesso direto ao WhatsApp do Analista</p>
                     </div>
                 </div>
 
                 <div class="relative group order-1 md:order-2">
-                    <div class="aspect-square sm:aspect-[4/5] rounded-sm overflow-hidden glass-panel border border-gray-800 relative z-10 bg-[#0a0a0c]">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-20">
-                            <i data-lucide="briefcase" class="w-24 h-24 text-[#D4AF37] mb-4"></i>
-                            <span class="font-mono text-[#D4AF37] text-xs uppercase tracking-widest">Aliança Estratégica</span>
-                        </div>
-                        <img src="minha-foto.jpeg" alt="Antônio Marcos - Parcerias" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 z-10">
+                    <div class="aspect-square sm:aspect-[4/5] rounded-sm overflow-hidden glass-panel border border-gray-800 bg-[#0a0a0c]">
+                        <img src="minha-foto.jpeg" alt="Antônio Marcos - Parcerias" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80'" class="absolute inset-0 w-full h-full object-cover grayscale opacity-90 hover:grayscale-0 hover:scale-105 transition-all duration-700 z-10">
                         <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-30">
                             <div class="flex items-center gap-3">
                                 <div class="w-1.5 h-6 bg-[#D4AF37]"></div>
@@ -753,543 +591,315 @@
                             </div>
                         </div>
                     </div>
-                    <div class="absolute -inset-4 bg-gradient-to-l from-[#D4AF37]/20 to-transparent blur-2xl z-0 rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="page-admin" class="page-section min-h-[calc(100vh-80px)] py-20 bg-[#020202]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-            <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-white font-mono flex items-center gap-3">
-                        <i data-lucide="terminal" class="w-6 h-6 text-[#D4AF37]"></i> AMX ADMIN TERMINAL
-                    </h2>
-                    <p class="text-gray-500 font-mono text-xs mt-1 tracking-widest uppercase">Gestão e Inteligência</p>
+    <div id="modal-leadgate" class="fixed inset-0 z-[100] bg-[#020202]/95 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel p-8 rounded border border-[#D4AF37]/40 w-full max-w-sm relative">
+            <button onclick="fecharGateModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="shield-alert" class="w-5 h-5 text-red-500"></i>
                 </div>
-                <button onclick="sairPainel()" class="text-red-500 hover:text-red-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2 border border-red-500/30 px-3 py-1.5 rounded hover:bg-red-500/10 transition-colors">
-                    <i data-lucide="log-out" class="w-4 h-4"></i> Encerrar Sessão
-                </button>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="glass-panel p-6 rounded border-t-2 border-t-blue-500">
-                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Acessos Totais</p>
-                    <div class="flex items-end gap-3">
-                        <span id="counter-visits" class="text-3xl font-bold text-white font-mono">142</span>
-                        <span class="text-blue-500 text-xs font-mono mb-1"><i data-lucide="activity" class="w-3 h-3 inline"></i> Online</span>
-                    </div>
-                </div>
-                <div class="glass-panel p-6 rounded border-t-2 border-t-green-500">
-                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Leads Capturados</p>
-                    <div class="flex items-end gap-3">
-                        <span id="counter-leads" class="text-3xl font-bold text-white font-mono">0</span>
-                        <span class="text-green-500 text-xs font-mono mb-1">Na Base</span>
-                    </div>
-                </div>
-                <div class="glass-panel p-6 rounded border-t-2 border-t-[#D4AF37]">
-                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-1">Status do Sistema</p>
-                    <div class="flex items-end gap-3">
-                        <span class="text-xl font-bold text-[#D4AF37] font-mono mt-1">OPERACIONAL</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded border border-gray-800 overflow-hidden">
-                <div class="bg-black/50 p-4 border-b border-gray-800 flex justify-between items-center">
-                    <h3 class="text-white font-mono text-sm uppercase tracking-widest">Base de Dados (Leads Recentes)</h3>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-gray-900/50 text-gray-500 font-mono text-[10px] uppercase tracking-widest">
-                                <th class="p-4 font-normal">Data</th>
-                                <th class="p-4 font-normal">Nome do Empresário</th>
-                                <th class="p-4 font-normal">Telefone / WhatsApp</th>
-                                <th class="p-4 font-normal">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leadsTableBody" class="text-gray-300 font-light text-sm">
-                            <tr id="emptyState" class="border-t border-gray-800/50">
-                                <td colspan="4" class="p-8 text-center text-gray-600 font-mono text-xs">Nenhum lead capturado nesta sessão.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded border border-gray-800 overflow-hidden mt-8">
-                <div class="bg-black/50 p-4 border-b border-gray-800 flex justify-between items-center">
-                    <h3 class="text-white font-mono text-sm uppercase tracking-widest">Controle de Honorários - 2024</h3>
-                    <span class="text-[#D4AF37] font-mono text-[10px] uppercase border border-[#D4AF37]/30 px-2 py-1 rounded bg-[#D4AF37]/10"><i data-lucide="shield-check" class="w-3 h-3 inline mr-1"></i> Acesso Restrito</span>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left border-collapse min-w-[1200px]">
-                        <thead>
-                            <tr class="bg-gray-900/50 text-gray-500 font-mono text-[10px] uppercase tracking-widest">
-                                <th class="p-3 border-b border-gray-800 font-normal">Cliente</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Venc.</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-right pr-4">Valor (R$)</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Jan</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Fev</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Mar</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Abr</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Mai</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Jun</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Jul</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Ago</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Set</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Out</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Nov</th>
-                                <th class="p-3 border-b border-gray-800 font-normal text-center">Dez</th>
-                            </tr>
-                        </thead>
-                        <tbody id="honorariosTableBody" class="text-gray-300 font-light text-xs">
-                            </tbody>
-                    </table>
-                </div>
+                <h2 class="text-white font-bold uppercase tracking-widest text-sm mb-2">Auditoria Bloqueada</h2>
+                <p class="text-gray-500 text-[10px] font-light leading-relaxed">Por razões de sigilo fiscal, valide a sua identidade corporativa para descriptografar a estimativa.</p>
             </div>
             
-        </div>
-    </section>
+            <form id="form-gate" onsubmit="processarLeadGate(event)" class="space-y-4">
+                <input type="text" id="gate-nome" required class="w-full bg-black border border-gray-800 p-3 text-white text-xs font-mono outline-none focus:border-[#D4AF37] rounded-sm" placeholder="Nome do Responsável">
+                <input type="tel" id="gate-tel" required class="w-full bg-black border border-gray-800 p-3 text-white text-xs font-mono outline-none focus:border-[#D4AF37] rounded-sm" placeholder="WhatsApp (Com DDD)">
+                <button type="submit" class="w-full bg-[#D4AF37] text-black font-bold uppercase tracking-widest py-3 text-[10px] hover:bg-white transition-colors mt-2 flex items-center justify-center gap-2">
+                    <i data-lucide="key" class="w-3 h-3"></i> Descriptografar Relatório
+                </button>
+            </form>
 
-    <div id="loginModal" class="fixed inset-0 z-[80] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="glass-panel p-8 rounded border border-gray-800 w-full max-w-sm">
-            <div class="flex justify-center mb-6">
-                <i data-lucide="lock" class="w-8 h-8 text-[#D4AF37]"></i>
+            <div id="load-gate" class="hidden flex-col items-center py-6">
+                <i data-lucide="loader" class="w-6 h-6 text-[#D4AF37] animate-spin mb-3"></i>
+                <p class="text-[#D4AF37] font-mono text-[9px] uppercase tracking-widest animate-pulse">A calcular impacto tributário...</p>
             </div>
-            <h2 class="text-xl font-bold text-white font-mono text-center mb-6">Acesso Restrito</h2>
-            <input type="password" id="adminPin" class="w-full bg-black border border-gray-800 rounded px-4 py-3 text-center text-white tracking-[0.5em] focus:border-[#D4AF37] outline-none font-mono mb-4" placeholder="••••••">
-            <button onclick="validarAcesso()" class="w-full bg-[#D4AF37] text-black font-bold font-mono uppercase tracking-widest py-3 rounded hover:bg-white transition-colors">
-                Autenticar
-            </button>
-            <p id="loginError" class="text-red-500 text-xs font-mono text-center mt-3 hidden">Credenciais Inválidas</p>
-            <button onclick="document.getElementById('loginModal').classList.add('hidden')" class="w-full text-center text-gray-500 text-xs font-mono mt-4 uppercase hover:text-white transition-colors">Cancelar</button>
         </div>
     </div>
 
-    <a href="https://wa.me/5531971743868?text=Ol%C3%A1%20Ant%C3%B4nio%21%20Acessei%20seu%20site%20e%20gostaria%20de%20informa%C3%A7%C3%B5es." target="_blank" class="fixed bottom-6 right-6 z-[50] bg-green-500 text-white p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:scale-110 transition-transform flex items-center justify-center group">
-        <span class="absolute right-full mr-4 bg-black/80 text-white text-xs font-mono px-3 py-1.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-gray-800">Falar com o Analista</span>
-        <i data-lucide="message-circle" class="w-7 h-7"></i>
+    <a href="https://wa.me/5531971743868" target="_blank" class="fixed bottom-6 right-6 z-[60] bg-green-500 text-white p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.4)] hover:scale-110 transition-transform flex items-center justify-center group">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
         <span class="absolute inset-0 rounded-full border-2 border-green-500 animate-ping opacity-75"></span>
     </a>
 
-    <footer class="bg-black border-t border-gray-900 py-10 text-center relative z-10 pb-24 lg:pb-10">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
-            <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mb-4 opacity-30">
-                <path d="M50 5 L90 25 V75 L50 95 L10 75 V25 L50 5Z" stroke="#D4AF37" stroke-width="2"/>
-                <path d="M50 30 L35 70 M50 30 L65 70 M40 55 L60 55" stroke="#D4AF37" stroke-width="4"/>
-            </svg>
-            <p class="text-gray-500 font-mono text-xs uppercase tracking-widest">© 2024 Antônio Marcos | Analista Contábil.</p>
-            <p class="text-gray-600 font-mono text-[10px] mt-2 uppercase tracking-widest mb-6">Parceiro Oficial: Adriana Souza Contabilidade Ltda.</p>
-            
-            <button onclick="abrirLogin()" class="text-gray-800 hover:text-[#D4AF37] transition-colors p-2 rounded-full" title="Painel do Analista">
-                <i data-lucide="lock" class="w-4 h-4"></i>
-            </button>
+    <footer class="bg-black border-t border-gray-900 py-8 text-center mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="text-gray-500 font-mono text-xs uppercase tracking-widest">© 2024 Antônio Marcos</p>
+            <p class="text-gray-700 font-mono text-[9px] uppercase tracking-widest mt-1">Adriana Souza Contabilidade Ltda.</p>
         </div>
     </footer>
 
     <script>
-        lucide.createIcons();
-
-        // -------------------------
-        // NAVEGAÇÃO
-        // -------------------------
+        // Variáveis Globais Essenciais
         let currentPage = 'home';
-        
-        function navigateTo(pageId) {
-            simulatedVisits++;
-            atualizarPainel();
+        let perdaFinanceiraGlobal = 0;
+        let valorFormatadoGlobal = "R$ 0,00";
 
-            const pages = document.querySelectorAll('.page-section');
-            pages.forEach(page => {
-                page.classList.remove('active');
-                setTimeout(() => {
-                    if(!page.classList.contains('active')) {
-                        page.style.display = 'none';
-                    }
-                }, 500);
-            });
-
-            const targetPage = document.getElementById('page-' + pageId);
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. FORÇAR A SAÍDA DA TELA PRETA (Para nunca travar)
             setTimeout(() => {
-                if (targetPage) {
-                    targetPage.style.display = 'block';
-                    void targetPage.offsetWidth; 
-                    targetPage.classList.add('active');
+                const bootScreen = document.getElementById('boot-screen');
+                if(bootScreen) {
+                    bootScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        bootScreen.style.display = 'none';
+                    }, 800);
                 }
-            }, 50);
+            }, 1800); // Exibe a tela por exatos 1.8 segundos e destrói
 
-            const navBtns = document.querySelectorAll('.nav-btn');
-            navBtns.forEach(btn => {
-                btn.classList.remove('text-[#D4AF37]');
-                btn.classList.add('text-gray-300');
+            // 2. Iniciar Ícones
+            try { lucide.createIcons(); } catch(e) { console.error(e); }
+
+            // 3. Inicializar Lógicas
+            navigateTo('home');
+            calcularRisco();
+            
+            // 4. Ligar APIs Assíncronas
+            fetchMarketData();
+            fetchRealNews();
+            setInterval(fetchMarketData, 60000); // Atualiza moedas a cada 1 min
+            
+            // 5. Iniciar FOMO
+            setTimeout(() => { setInterval(triggerFomo, 15000); }, 5000);
+        });
+
+        // NAVEGAÇÃO SPA 
+        function navigateTo(pageId) {
+            // Fecha menu mobile
+            const mobMenu = document.getElementById('mobile-menu');
+            if(mobMenu && !mobMenu.classList.contains('hidden')) {
+                mobMenu.classList.add('hidden');
+            }
+
+            // Oculta todas as páginas
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
             });
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Mostra a selecionada
+            const target = document.getElementById('page-' + pageId);
+            if(target) {
+                target.style.display = 'block';
+                // Força reflow
+                void target.offsetWidth; 
+                target.classList.add('active');
+            }
+
+            // Atualiza botões
+            document.querySelectorAll('.nav-btn').forEach(btn => { 
+                btn.classList.remove('text-[#D4AF37]'); 
+                btn.classList.add('text-gray-300'); 
+            });
+
+            window.scrollTo(0, 0);
             currentPage = pageId;
         }
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
-            }
-        }
-        const mobBtn = document.getElementById('mobile-menu-btn');
-        if(mobBtn) mobBtn.addEventListener('click', toggleMobileMenu);
-
-        // -------------------------
-        // CÁLCULO DE SANGRIA FISCAL REAL
-        // -------------------------
+        // MOTOR DA CALCULADORA (LEAD GATE)
         function calcularRisco() {
-            const slider = document.getElementById('revenueSlider');
-            const setorSelect = document.getElementById('calc-setor');
-            const regimeSelect = document.getElementById('calc-regime');
+            const elSlider = document.getElementById('revenueSlider');
+            const elSetor = document.getElementById('calc-setor');
+            const elRegime = document.getElementById('calc-regime');
+            
+            if(!elSlider || !elSetor || !elRegime) return;
 
-            if(!slider || !setorSelect || !regimeSelect) return;
+            const val = parseInt(elSlider.value);
+            const setor = elSetor.value;
+            const regime = elRegime.value;
 
-            const val = parseInt(slider.value);
-            const setor = setorSelect.value;
-            const regime = regimeSelect.value;
-
-            document.getElementById('faturamento-display').innerText = val.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            document.getElementById('faturamento-display').innerText = "R$ " + (val / 1000).toFixed(0) + "k";
 
             const taxas = {
-                'servicos': { 'simples': 0.112, 'presumido': 0.1633, 'real': 0.185 },
-                'comercio': { 'simples': 0.085, 'presumido': 0.1068, 'real': 0.142 },
-                'industria': { 'simples': 0.095, 'presumido': 0.1133, 'real': 0.155 }
+                'servicos': { 'simples': 0.112, 'presumido': 0.163, 'real': 0.185 },
+                'comercio': { 'simples': 0.085, 'presumido': 0.106, 'real': 0.142 },
+                'industria': { 'simples': 0.095, 'presumido': 0.113, 'real': 0.155 }
             };
 
-            const taxaAtual = taxas[setor][regime];
-            const taxaIdeal = Math.min(taxas[setor]['simples'], taxas[setor]['presumido'], taxas[setor]['real']);
-            let taxaOtimizada = taxaIdeal * 0.85; 
+            const tAtual = taxas[setor][regime];
+            const tOtimizada = Math.min(taxas[setor]['simples'], taxas[setor]['presumido'], taxas[setor]['real']) * 0.85;
 
-            const impostoMensalAtual = val * taxaAtual;
-            const impostoMensalOtimizado = val * taxaOtimizada;
-
-            let perdaMensal = impostoMensalAtual - impostoMensalOtimizado;
-
-            if(perdaMensal < (val * 0.04)) {
-                perdaMensal = val * 0.04; 
-            }
-
-            const perdaAnual = perdaMensal * 12;
-
-            if(document.getElementById('taxa-atual-display')) document.getElementById('taxa-atual-display').innerText = (taxaAtual * 100).toFixed(1) + '%';
-            if(document.getElementById('perda-display')) document.getElementById('perda-display').innerText = perdaAnual.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            let perdaMensal = (val * tAtual) - (val * tOtimizada);
+            if(perdaMensal < val * 0.03) perdaMensal = val * 0.03; 
             
-            if(document.getElementById('bar-atual-chart')) document.getElementById('bar-atual-chart').style.width = `${taxaAtual * 100}%`;
-            if(document.getElementById('bar-alvo-chart')) document.getElementById('bar-alvo-chart').style.width = `${taxaOtimizada * 100}%`;
-            if(document.getElementById('taxa-alvo-display')) document.getElementById('taxa-alvo-display').innerText = (taxaOtimizada * 100).toFixed(1) + '%';
+            perdaFinanceiraGlobal = perdaMensal * 12;
+            valorFormatadoGlobal = perdaFinanceiraGlobal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL', maximumFractionDigits: 0});
+
+            // Reseta Bloqueio Visual
+            const blurContainer = document.getElementById('perda-blur-container');
+            const btnUnlock = document.getElementById('btn-unlock');
+            const txtReal = document.getElementById('perda-display-real');
+            const btnWhats = document.getElementById('btn-whatsapp-direto');
+
+            if(blurContainer) blurContainer.classList.remove('hidden');
+            if(btnUnlock) btnUnlock.style.display = 'flex';
+            if(txtReal) txtReal.classList.add('hidden');
+            if(btnWhats) btnWhats.classList.add('hidden');
+
+            const blurVal = document.getElementById('perda-display-blur');
+            if(blurVal) {
+                blurVal.innerText = "R$ ***.***";
+                blurVal.classList.add('blur-locked');
+            }
         }
 
-        // -------------------------
-        // ADMIN LEADS
-        // -------------------------
-        let leadsBase = [];
-        let simulatedVisits = 142;
+        // Funções do Modal Gate
+        function abrirGateModal() {
+            const modal = document.getElementById('modal-leadgate');
+            if(modal) {
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
+            }
+        }
 
-        function capturarLead(e) {
+        function fecharGateModal() {
+            const modal = document.getElementById('modal-leadgate');
+            if(modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+        }
+
+        function processarLeadGate(e) {
             e.preventDefault();
-            const nome = document.getElementById('leadName').value;
-            const telefone = document.getElementById('leadPhone').value;
-            const novoLead = {
-                id: Date.now(),
-                data: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
-                nome: nome,
-                telefone: telefone
-            };
-            leadsBase.push(novoLead);
-            atualizarPainel();
-            document.getElementById('leadForm').style.display = 'none';
-            document.getElementById('leadSuccess').classList.remove('hidden');
+            const nome = document.getElementById('gate-nome').value;
+            const tel = document.getElementById('gate-tel').value;
+
+            document.getElementById('form-gate').classList.add('hidden');
+            document.getElementById('load-gate').classList.remove('hidden');
+            document.getElementById('load-gate').style.display = 'flex';
+
+            // Background Email (Ignora se falhar)
+            try {
+                fetch("https://formsubmit.co/ajax/eusouanton@gmail.com", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ Aviso: "Calculadora AMX", Nome: nome, Telefone: tel, PerdaAnual: valorFormatadoGlobal })
+                }).catch(e => console.log("Email bypass"));
+            } catch(e) {}
+
+            // Aguarda 1.2s e Destranca
             setTimeout(() => {
-                document.getElementById('leadForm').reset();
-                document.getElementById('leadForm').style.display = 'block';
-                document.getElementById('leadSuccess').classList.add('hidden');
-            }, 5000);
-        }
-
-        function atualizarPainel() {
-            if(document.getElementById('counter-visits')) document.getElementById('counter-visits').innerText = simulatedVisits;
-            if(document.getElementById('counter-leads')) document.getElementById('counter-leads').innerText = leadsBase.length;
-
-            const tbody = document.getElementById('leadsTableBody');
-            if(tbody && leadsBase.length > 0) {
-                if(document.getElementById('emptyState')) document.getElementById('emptyState').style.display = 'none';
-                tbody.innerHTML = '';
-                [...leadsBase].reverse().forEach(lead => {
-                    const tr = document.createElement('tr');
-                    tr.className = "border-t border-gray-800/50 hover:bg-[#D4AF37]/5 transition-colors";
-                    tr.innerHTML = `
-                        <td class="p-4 font-mono text-xs text-gray-500">${lead.data}</td>
-                        <td class="p-4 text-white font-medium">${lead.nome}</td>
-                        <td class="p-4 font-mono text-[#D4AF37]">${lead.telefone}</td>
-                        <td class="p-4">
-                            <a href="https://wa.me/55${lead.telefone.replace(/\D/g,'')}?text=Ol%C3%A1%20${encodeURIComponent(lead.nome)},%20vi%20o%20seu%20interesse%20em%20estrat%C3%A9gia%20fiscal." target="_blank" class="text-green-500 hover:text-green-400 font-mono text-[10px] uppercase border border-green-500/30 px-2 py-1 rounded transition-colors">
-                                Contatar
-                            </a>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
-        }
-
-        function abrirLogin() { 
-            const login = document.getElementById('loginModal');
-            if(login) {
-                login.classList.remove('hidden'); 
-                login.style.display = 'flex'; 
-            }
-        }
-
-        function validarAcesso() {
-            const pin = document.getElementById('adminPin').value;
-            if(pin === 'amx2026') {
-                document.getElementById('loginModal').classList.add('hidden');
-                document.getElementById('adminPin').value = '';
-                document.getElementById('loginError').classList.add('hidden');
-                navigateTo('admin');
-            } else {
-                document.getElementById('loginError').classList.remove('hidden');
-            }
-        }
-
-        function sairPainel() {
-            navigateTo('home');
-        }
-
-        // -------------------------
-        // GESTÃO DE HONORÁRIOS
-        // -------------------------
-        const clientesHonorarios = [
-            { nome: "Ceamp Clinica Especializada Atendimento Médico Psico", valor: "330,00", dia: "06" },
-            { nome: "Eo Consultoria e Gestão Administrativa Ltda", valor: "330,00", dia: "06" },
-            { nome: "Books jclh Ltda", valor: "495,00", dia: "06" },
-            { nome: "Curandi Medicina Especializada Ltda", valor: "550,00", dia: "06" },
-            { nome: "Mjf Serviços de Engenharia e Consultoria Ltda", valor: "385,00", dia: "06" },
-            { nome: "Exames Ocupacionais Jclh Ltda", valor: "770,00", dia: "06" },
-            { nome: "Elis Carlos Mendes", valor: "385,00", dia: "06" },
-            { nome: "Ana Paula Alves", valor: "385,00", dia: "06" },
-            { nome: "Ariele Cristina", valor: "400,00", dia: "30" },
-            { nome: "Eliane de Souza Moreira Paixão", valor: "834,90", dia: "30" },
-            { nome: "Lmd técnicos Ltda", valor: "550,00", dia: "20" },
-            { nome: "Eficaz instalações Elétricas Ltda", valor: "550,00", dia: "20" },
-            { nome: "Tiago Fortunato", valor: "484,00", dia: "20" },
-            { nome: "Jose Geraldo Neri", valor: "563,75", dia: "20" },
-            { nome: "Casa de Carnes Dois Irmãos", valor: "563,75", dia: "20" }
-        ];
-
-        function renderHonorarios() {
-            const tbody = document.getElementById('honorariosTableBody');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            
-            clientesHonorarios.forEach(c => {
-                const tr = document.createElement('tr');
-                tr.className = "border-b border-gray-800/50 hover:bg-white/5 transition-colors";
+                fecharGateModal();
                 
-                let mesesHtml = '';
-                for(let i = 1; i <= 12; i++) {
-                    if(i <= 3) {
-                        // Jan, Fev, Mar pré-preenchidos como "Pago"
-                        mesesHtml += `<td class="p-3 text-center"><span class="bg-green-500/10 text-green-500 border border-green-500/20 px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase">Pago</span></td>`;
-                    } else {
-                        // Abr-Dez com caixa de seleção configurável
-                        mesesHtml += `
-                            <td class="p-3 text-center">
-                                <select class="select-status rounded text-[9px] font-mono px-1 py-1 w-[55px]" onchange="atualizarStatusSelect(this)">
-                                    <option value="">--</option>
-                                    <option value="pago">Pago</option>
-                                    <option value="pendente">Pend.</option>
-                                </select>
-                            </td>`;
-                    }
+                // Restaura estado form
+                document.getElementById('form-gate').classList.remove('hidden');
+                document.getElementById('load-gate').classList.add('hidden');
+                document.getElementById('load-gate').style.display = 'none';
+
+                // Revela no site
+                document.getElementById('perda-blur-container').classList.add('hidden');
+                
+                const textoReal = document.getElementById('perda-display-real');
+                textoReal.classList.remove('hidden');
+                
+                animarDescriptografia(textoReal, valorFormatadoGlobal);
+
+                document.getElementById('btn-whatsapp-direto').classList.remove('hidden');
+            }, 1200);
+        }
+
+        function animarDescriptografia(elemento, valorFinal) {
+            const chars = '0123456789R$.';
+            let i = 0;
+            const interval = setInterval(() => {
+                let random = '';
+                for(let j=0; j < valorFinal.length; j++) random += chars[Math.floor(Math.random() * chars.length)];
+                elemento.innerText = random;
+                i++;
+                if(i > 15) {
+                    clearInterval(interval);
+                    elemento.innerText = valorFinal;
                 }
-
-                tr.innerHTML = `
-                    <td class="p-3 font-medium text-white truncate max-w-[200px]" title="${c.nome}">${c.nome}</td>
-                    <td class="p-3 text-center text-gray-500 font-mono text-[10px]">${c.dia}</td>
-                    <td class="p-3 text-[#D4AF37] font-mono text-right pr-4 text-[11px] font-bold">${c.valor}</td>
-                    ${mesesHtml}
-                `;
-                tbody.appendChild(tr);
-            });
+            }, 40);
         }
 
-        // Função para alterar a cor do select baseado no status (Pago/Pendente)
-        function atualizarStatusSelect(selectElement) {
-            selectElement.classList.remove('is-pago', 'is-pendente');
-            if (selectElement.value === 'pago') {
-                selectElement.classList.add('is-pago');
-            } else if (selectElement.value === 'pendente') {
-                selectElement.classList.add('is-pendente');
-            }
+        function redirecionarWhats() {
+            const msg = `Olá! Fiz o teste no seu site e descobri que posso estar perdendo ${valorFormatadoGlobal} por ano. Gostaria de uma auditoria.`;
+            window.open(`https://wa.me/5531971743868?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-
-        // -------------------------
-        // INTEGRAÇÃO DE APIs (DADOS REAIS - INFOMONEY)
-        // -------------------------
-        
-        let apiNewsList = [];
-        let newsDisplayIndex = 0;
-        const feedContainer = document.getElementById('live-news-feed');
-        const loadingElement = document.getElementById('loading-feed');
-
+        // INTEGRAÇÃO DE APIs
         async function fetchMarketData() {
             try {
-                const response = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL,ETH-BRL');
-                const data = await response.json();
+                const res = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,BTC-BRL');
+                if(!res.ok) return;
+                const data = await res.json();
+                const fmt = (v) => Number(v).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
                 
-                const formatCurrency = (value) => {
-                    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(parseFloat(value));
-                };
-
-                const updateMetric = (id, barId, apiData, baseColor) => {
-                    if(apiData) {
-                        const el = document.getElementById(id);
-                        const bar = document.getElementById(barId);
-                        if(el) el.innerText = formatCurrency(apiData.bid);
-                        if(bar) {
-                            const pct = parseFloat(apiData.pctChange);
-                            let width = 50 + (pct * 5); 
-                            if(width < 10) width = 10;
-                            if(width > 90) width = 90;
-                            
-                            bar.style.width = `${width}%`;
-                            bar.className = `h-full transition-all duration-1000 ${pct < 0 ? 'bg-red-500' : baseColor}`;
-                        }
-                    }
-                };
-
-                updateMetric('metric-usd', 'bar-usd', data.USDBRL, 'bg-green-500');
-                updateMetric('metric-eur', 'bar-eur', data.EURBRL, 'bg-blue-500');
-                updateMetric('metric-btc', 'bar-btc', data.BTCBRL, 'bg-[#D4AF37]'); 
-                updateMetric('metric-eth', 'bar-eth', data.ETHBRL, 'bg-purple-500'); 
-
-            } catch (e) {
-                console.log("Erro ao buscar câmbio ao vivo, aguardando próxima tentativa.");
-            }
+                const u = document.getElementById('val-usd'); if(u) u.innerText = fmt(data.USDBRL.bid);
+                const e = document.getElementById('val-eur'); if(e) e.innerText = fmt(data.EURBRL.bid);
+                const b = document.getElementById('val-btc'); if(b) b.innerText = fmt(data.BTCBRL.bid);
+            } catch(e) { console.log("Moedas Off"); }
         }
 
         async function fetchRealNews() {
             try {
-                const rssUrl = 'https://www.infomoney.com.br/feed/';
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
-                const data = await response.json();
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://www.infomoney.com.br/feed/')}`);
+                if(!res.ok) throw new Error("RSS Falhou");
                 
-                if(data.status === 'ok' && data.items.length > 0) {
-                    apiNewsList = data.items;
-                    if(loadingElement) loadingElement.style.display = 'none';
-                    
-                    for(let i = 0; i < 3; i++) {
-                        injectNextNews(false);
-                    }
-                    iniciarFeedContinuoReal();
-                } else {
-                    throw new Error("Formato de API não reconhecido");
-                }
-            } catch (e) {
-                console.log("Erro ao buscar notícias da API.", e);
-                if(loadingElement) loadingElement.innerHTML = `<p class="text-red-400 font-mono text-xs">Erro de conexão com o terminal financeiro.</p>`;
+                const data = await res.json();
+                const container = document.getElementById('container-noticias');
+                const load = document.getElementById('loading-noticias');
+                
+                if(!container) return;
+                if(load) load.style.display = 'none';
+                
+                container.innerHTML = ''; 
+                data.items.slice(0, 5).forEach(item => {
+                    const d = new Date(item.pubDate).toLocaleDateString('pt-BR');
+                    const div = document.createElement('div');
+                    div.className = "p-4 border-b border-gray-800/50 hover:bg-[#D4AF37]/5 transition-colors rounded";
+                    div.innerHTML = `
+                        <p class="text-[9px] font-mono text-gray-500 mb-1">${d}</p>
+                        <a href="${item.link}" target="_blank" class="text-xs text-gray-300 hover:text-white block leading-relaxed">${item.title}</a>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch(e) {
+                const load = document.getElementById('loading-noticias');
+                if(load) load.innerText = "Feed Indisponível";
             }
         }
 
-        function getCategoryStyle(title) {
-            const lowerTitle = title.toLowerCase();
-            if(lowerTitle.includes('imposto') || lowerTitle.includes('receita') || lowerTitle.includes('tributo') || lowerTitle.includes('haddad')) return { tag: 'FISCAL', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' };
-            if(lowerTitle.includes('alta') || lowerTitle.includes('lucro') || lowerTitle.includes('bolsa') || lowerTitle.includes('ibovespa')) return { tag: 'MERCADO', color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/30' };
-            if(lowerTitle.includes('dólar') || lowerTitle.includes('euro') || lowerTitle.includes('bitcoin') || lowerTitle.includes('cripto') || lowerTitle.includes('fed')) return { tag: 'CÂMBIO', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' };
-            return { tag: 'NEGÓCIOS', color: 'text-[#D4AF37]', bg: 'bg-[#D4AF37]/10', border: 'border-[#D4AF37]/30' };
+        // FOMO NOTIFICAÇÃO
+        const fomoLista = [
+            { t: "Indústria (Contagem)", d: "Validou redução de carga tributária." },
+            { t: "Comércio Varejista", d: "Identificou R$ 80k em perdas anuais." },
+            { t: "Clínica Médica (BH)", d: "Mapeou risco de conformidade." }
+        ];
+        
+        function triggerFomo() {
+            const popup = document.getElementById('fomo-popup');
+            if(!popup || currentPage !== 'home') return;
+
+            const item = fomoLista[Math.floor(Math.random() * fomoLista.length)];
+            document.getElementById('fomo-title').innerText = item.t;
+            document.getElementById('fomo-desc').innerText = item.d;
+
+            popup.classList.remove('translate-y-[150%]', 'opacity-0');
+            popup.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                popup.classList.remove('translate-y-0', 'opacity-100');
+                popup.classList.add('translate-y-[150%]', 'opacity-0');
+            }, 4500);
         }
 
-        function renderizarNoticiaReal(newsData, isNew = false) {
-            const div = document.createElement('div');
-            div.className = `p-4 rounded border border-gray-800 bg-[#0a0a0c] hover:border-[#D4AF37]/40 transition-all ${isNew ? 'animate-[pulse_1s_ease-in-out]' : ''}`;
-            
-            const category = getCategoryStyle(newsData.title);
-            const pubDate = new Date(newsData.pubDate);
-            const timeString = pubDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
-
-            div.innerHTML = `
-                <div class="flex justify-between items-center mb-2">
-                    <span class="${category.color} ${category.bg} ${category.border} font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 rounded border">
-                        ${category.tag}
-                    </span>
-                    <span class="text-gray-600 font-mono text-[10px]">Hoje, ${timeString}</span>
-                </div>
-                <p class="text-gray-300 font-light text-sm leading-relaxed mb-1">${newsData.title}</p>
-                <div class="mt-3 flex items-center justify-between cursor-pointer group" onclick="window.open('${newsData.link}', '_blank')">
-                    <span class="text-[#D4AF37] font-mono text-[10px] uppercase tracking-widest group-hover:underline">Ler no InfoMoney</span>
-                    <i data-lucide="external-link" class="w-3 h-3 text-[#D4AF37] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                </div>
-            `;
-            return div;
-        }
-
-        function injectNextNews(animate = true) {
-            if(!feedContainer || apiNewsList.length === 0) return;
-            
-            const newsData = apiNewsList[newsDisplayIndex % apiNewsList.length];
-            newsDisplayIndex++;
-
-            const novoItem = renderizarNoticiaReal(newsData, animate);
-            
-            if(animate) {
-                novoItem.style.opacity = '0';
-                novoItem.style.transform = 'translateY(-20px)';
-                feedContainer.insertBefore(novoItem, feedContainer.firstChild);
-                lucide.createIcons();
-                void novoItem.offsetWidth;
-                novoItem.style.opacity = '1';
-                novoItem.style.transform = 'translateY(0)';
-            } else {
-                feedContainer.appendChild(novoItem);
-                lucide.createIcons();
-            }
-
-            if(feedContainer.children.length > 10 && feedContainer.lastChild !== loadingElement) {
-                feedContainer.removeChild(feedContainer.lastChild);
-            }
-
-            const dataAtual = new Date();
-            const lastUpdate = document.getElementById('last-update-time');
-            if(lastUpdate) {
-                lastUpdate.innerHTML = `<span class="text-green-500 font-bold">●</span> ONLINE: ${dataAtual.toLocaleTimeString('pt-BR')}`;
-            }
-        }
-
-        function iniciarFeedContinuoReal() {
-            setInterval(() => {
-                if(currentPage === 'insights') {
-                    injectNextNews(true);
-                }
-            }, 12000);
-        }
-
-        // ==========================
-        // INICIALIZAÇÃO GLOBAL
-        // ==========================
-        document.addEventListener('DOMContentLoaded', () => {
-            navigateTo('home');
-            atualizarPainel();
-            calcularRisco();
-            renderHonorarios(); // Injeta a tabela de honorários ao carregar
-            
-            // APIs Reais
-            fetchMarketData(); 
-            fetchRealNews();   
-            
-            // Atualiza os dados financeiros reais a cada 30 segundos
-            setInterval(fetchMarketData, 30000);
+        // GLOW EFFECT (Apenas onde há a classe glass-panel)
+        document.addEventListener('mousemove', e => {
+            document.querySelectorAll('.glass-panel').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            });
         });
-
     </script>
 </body>
 </html>
